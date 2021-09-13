@@ -1,4 +1,4 @@
-from day import Day
+from .day import Day
 
 class Term():
     def __init__(self, hour, minute, day, duration=90):
@@ -11,6 +11,10 @@ class Term():
         return f'{self.hour}:{self.minute} [{self.duration}]'
 
     def getDay(self):
+        return self._day
+
+    def setDay(self, day):
+        self._day = day
         return self._day
 
     def earlierThan(self, termin):
