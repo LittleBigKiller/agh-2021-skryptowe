@@ -105,6 +105,9 @@ class Term():
     def __ge__(self, termin):
         return self.laterThan(termin) or self.equals(termin)
 
+    def getStartTime(self):
+        return (self.hour, self.minute)
+
     def getEndTime(self):
         add_hour = self._duration // 60
         add_min = self._duration % 60
@@ -117,6 +120,10 @@ class Term():
         end_hour = self._hour + add_hour
 
         return (end_hour, end_min)
+    
+    def getCompTime(self):
+        et = self.getEndTime()
+        return (self.hour, self.minute, et[0], et[1])
 
     def printEndTime(self):
         timeTuple = self.getEndTime()

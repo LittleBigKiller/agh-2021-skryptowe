@@ -1,16 +1,19 @@
+
 from typing import List
 
 from .day import Day
 from .term import Term
 from .lesson import Lesson
 from .action import Action
+from .tbreak import Break
 
+class Timetable2:
+    skipBreaks = False
 
-class Timetable1:
-
-    def __init__(self):
+    def __init__(self, breaks: List[Break]):
+        self.breaks = breaks
         self.lesson_list = []
-
+    
     def can_be_transferred_to(self, term: Term, full_time: bool) -> bool:
         if term.hour < 8:
             return False
@@ -26,7 +29,7 @@ class Timetable1:
                 is_ft = True
             elif term.day.value > 5:
                 is_ft = False
-            else:
+            else: 
                 if term.hour < 17:
                     is_ft = True
                 else:
@@ -36,10 +39,41 @@ class Timetable1:
                 return True
         return False
 
+    def overlapsBreak(self, term: Term) -> bool:
+        ts = term.getStartTime()
+        te = term.getEndTime()
+        for bre in self.breaks:
+            bs = bre.term.getStartTime()
+            be = bre.term.getEndTime()
+            if ts > bs and ts < be:
+                return (True, bre.term.duration)
+            if te > bs and te < be:
+                return (True, bre.term.duration)
+            if ts == bs and te > be:
+                return (True, bre.term.duration)
+            if ts < bs and te == be:
+                return (True, bre.term.duration)
+        return False
+
     def busy(self, term: Term) -> bool:
+        ts = term.getStartTime()
+        te = term.getEndTime()
         for les in self.lesson_list:
-            if les.term == term:
-                return True
+            if term.day == les.term.day:
+                ls = les.term.getStartTime()
+                le = les.term.getEndTime()
+                if ts > ls and ts < le:
+                    return True
+                if te > ls and te < le:
+                    return True
+                if ts == ls:
+                    return True
+                if te == le:
+                    return True
+                if ts < ls and te > le:
+                    return True
+                if ts > ls and te < le:
+                    return True
         return False
 
     def put(self, lesson: Lesson) -> bool:
@@ -50,6 +84,10 @@ class Timetable1:
             for les in self.lesson_list:
                 if les.term == lesson.term:
                     return False
+
+            if self.overlapsBreak(lesson.term):
+                return False
+
             self.lesson_list.append(lesson)
             return True
         return False
@@ -86,8 +124,16 @@ class Timetable1:
     def __str__(self):
         timetab = []
         for les in self.lesson_list:
-            timetab.append(les.term)
-        timetab = sorted(timetab, key=lambda t: t.printStartTime())
+            tstr = f'{les.term.printStartTime()}-{les.term.printEndTime()}'
+            if not tstr in timetab:
+                timetab.append(tstr)
+
+        for bre in self.breaks:
+            tstr = f'{bre.term.printStartTime()}-{bre.term.printEndTime()}'
+            if not tstr in timetab:
+                timetab.append(tstr)
+
+        timetab = sorted(timetab)
 
         disptab = []
         for i in range(8):
@@ -99,10 +145,16 @@ class Timetable1:
             disptab[d.value][0] = str(d)
 
         for c, t in enumerate(timetab):
-            disptab[0][c + 1] = f'{t.printStartTime()}-{t.printEndTime()}'
+            disptab[0][c + 1] = f'{t}'
 
         for les in self.lesson_list:
-            disptab[les.term.day.value][timetab.index(les.term) + 1] = les.name
+            tstr = f'{les.term.printStartTime()}-{les.term.printEndTime()}'
+            disptab[les.term.day.value][timetab.index(tstr) + 1] = les.name
+
+        for bre in self.breaks:
+            tstr = f'{bre.term.printStartTime()}-{bre.term.printEndTime()}'
+            for i in range(1, 8):
+                disptab[i][timetab.index(tstr) + 1] = f'------'
 
         b = ''
         bl = f'\n{b: ^12}{b:*^92}\n'
