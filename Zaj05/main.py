@@ -1,3 +1,4 @@
+import sys
 from DeanerySystem import *
 
 term1 = Term(8, 0, Day.WED)
@@ -14,19 +15,26 @@ l3 = Lesson(tt2, term3, 'lesson3', 'lesson3', 2)
 
 print(tt2)
 
-tt2.put(l1)
+try:
+    tt2.put(l1)
+except Exception as e:
+    print(e)
+    sys.exit()
 
 print(tt2)
 
-tt2.put(l2)
+try:
+    tt2.put(l2)
+except Exception as e:
+    print(e)
+    sys.exit()
 
 print(tt2)
 
-tt2.put(l3)
-
-print(tt2)
-
-#l1.laterTime()
-#l3.earlierTime()
+try:
+    tt2.put(l3)
+except Exception as e:
+    print(e)
+    sys.exit()
 
 print(tt2)

@@ -6,8 +6,9 @@ from .term import Term
 from .lesson import Lesson
 from .action import Action
 from .tbreak import Break
+from .basictimetable import BasicTimetable
 
-class Timetable2:
+class Timetable2(BasicTimetable):
     skipBreaks = False
 
     def __init__(self, breaks: List[Break]):
@@ -83,43 +84,16 @@ class Timetable2:
         else:
             for les in self.lesson_list:
                 if les.term == lesson.term:
+                    raise ValueError(f'Podany termin jest zajęty przez inną lekcję')
                     return False
 
             if self.overlapsBreak(lesson.term):
+                raise ValueError('Podany termin jest zajęty przez przerwę')
                 return False
 
             self.lesson_list.append(lesson)
             return True
         return False
-
-
-    def parse(self, actions: List[str]) -> List[Action]:
-        action_list = []
-        for ac in actions:
-            if ac == 'd-':
-                action_list.append(Action.DAY_EARLIER)
-            elif ac == 'd+':
-                action_list.append(Action.DAY_LATER)
-            elif ac == 't-':
-                action_list.append(Action.TIME_EARLIER)
-            elif ac == 't+':
-                action_list.append(Action.TIME_LATER)
-        return action_list
-
-    def perform(self, actions: List[Action]):
-        lc = 0
-        for ac in actions:
-            if ac == Action.DAY_EARLIER:
-                self.lesson_list[lc].earlierDay()
-            elif ac == Action.DAY_LATER:
-                self.lesson_list[lc].laterDay()
-            elif ac == Action.TIME_EARLIER:
-                self.lesson_list[lc].earlierTime()
-            elif ac == Action.TIME_LATER:
-                self.lesson_list[lc].laterTime()
-
-            lc += 1
-            lc %= len(self.lesson_list)
 
     def __str__(self):
         timetab = []
@@ -167,13 +141,4 @@ class Timetable2:
             finstr += bl
 
         return finstr
-        
-
-    def get(self, term: Term) -> Lesson:
-        ltr = None
-        for les in self.lesson_list:
-            if les.term == term:
-                ltr = les
-                break
-        return ltr
 
