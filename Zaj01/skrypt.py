@@ -15,7 +15,6 @@ def is_prime(num):
     return True
 
 if __name__ == '__main__':
-    args = sys.argv[1:]
-    for i in args:
+    for i in sys.argv[1:]:
         if is_prime(i):
             print(i)
