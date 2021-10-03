@@ -1,0 +1,101 @@
+aside {
+    /* Specyfikacja wyglądu */
+    float: right;
+    width: 550px;
+    padding: 5px;
+}
+
+aside h1,
+aside h2 {
+    margin: 0;
+    font-size: 2em;
+}
+
+footer {
+    /* Specyfikacja wyglądu */
+    clear: both;
+    padding: 10px;
+}
+
+@keyframes red2blue {
+    from {
+        color: red;
+    }
+
+    to {
+        color: blue;
+    }
+}
+
+@keyframes blue2red {
+    from {
+        color: blue;
+    }
+
+    to {
+        color: red;
+    }
+}
+
+@media screen and (max-width: 992px) and (min-width: 768px) {
+    header h1 {
+        color: red;
+        animation-name: blue2red;
+        animation-duration: 500ms;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    header h1 {
+        color: blue;
+        animation-name: red2blue;
+        animation-duration: 500ms;
+    }
+}
+
+h1 {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-weight: bold;
+    font-size: 3em;
+    margin: 5px;
+}
+
+main {
+    /* Specyfikacja wyglądu */
+    float: left;
+    width: 450px;
+    clear: left;
+    padding: 10px;
+    padding-bottom: 40px;
+}
+
+main h1 {
+    margin: 0;
+}
+
+main pre {
+    margin: 0;
+}
+
+nav {
+    float: left;
+}
+
+nav ul {
+    margin: 20px 0px;
+}
+
+nav li {
+    width: 80px;
+    margin-left: 10px;
+}
+
+.azure {
+    background-color: azure;
+}
+
+.polak-box {
+    border: 2px solid #a8a8a8;
+    box-shadow: 0px 0px 10px black;
+    margin: 10px;
+}
