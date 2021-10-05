@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <title>
+        Tytuł Strony
+    </title>
+</head>
+
+<body>
+    <header>
+        <!-- Page title -->
+        <!-- background-color: #EFF -->
+        <!-- border-color: #A8A8A8 -->
+
+        <h1>
+            Tytuł strony
+        </h1>
+    </header>
+    <nav>
+        <!-- Nav menu -->
+        <!-- margin: 0 25px -->
+
+        <ul>
+            <li>
+                <a href="">Element 1</a>
+            </li>
+
+            <li>
+                <a href="">Element 2</a>
+            </li>
+        </ul>
+    </nav>
+
+    <aside>
+        <!-- Side panel -->
+
+        <h1>
+            Panel boczny
+        </h1>
+
+        <h2>
+            Ciekawe odsyłacze
+        </h2>
+
+        <ul>
+            <li>
+                <a href="">Odsyłacz 1</a>
+            </li>
+
+            <li>
+                <a href="">Odsyłacz 2</a>
+            </li>
+
+            <li>
+                <a href="">Odsyłacz 3</a>
+            </li>
+        </ul>
+    </aside>
+
+    <main>
+        <!-- Page content -->
+
+        <h1>
+            Treść strony
+        </h1>
+
+        <pre>
+Natenczas Wojski chwycił na taśmie przypięty
+Swój róg bawoli, długi, cętkowany, kręty
+Jak wąż boa, oburącz do ust go przycisnął,
+Wzdął policzki jak banię, w oczach krwią zabłysnął,
+Zasunął wpół powieki, wciągnął w głąb pół brzucha
+I do płuc wysłał z niego cały zapas ducha,
+I zagrał: róg jak wicher, wirowatym dechem
+Niesie w puszczę muzykę i podwaja echem.
+
+Umilkli strzelcy, stali szczwacze zadziwieni
+Mocą, czystością, dziwną harmoniją pieni.
+Starzec cały kunszt, którym niegdyś w lasach słynął,
+Jeszcze raz przed uszami myśliwców rozwinął;
+Napełnił wnet, ożywił knieje i dąbrowy,
+Jakby psiarnię w nie wpuścił i rozpoczął łowy.
+
+Bo w graniu była łowów historyja krótka:
+Zrazu odzew dźwięczący, rześki: to pobudka;
+Potem jęki po jękach skomlą: to psów granie;
+A gdzieniegdzie ton twardszy jak grzmot: to strzelanie.
+        </pre>
+    </main>
+
+    <footer>
+        <!-- Footer content -->
+        <a href="mailto:your.email.address">Imię Nazwisko</a>
+    </footer>
+
+    <script>
+        function ustaw() {
+            document.getElementsByTagName('header')[0].style = "background-color: azure; border: 2px solid #a8a8a8; box-shadow: 0px 0px 10px black; margin: 10px;"
+
+            document.getElementsByTagName('aside')[0].style = "float: right; width: 550px; padding: 5px; background-color: azure; border: 2px solid #a8a8a8; box-shadow: 0px 0px 10px black; margin: 10px;"
+
+            for (i = 0; i < document.getElementsByTagName('h1').length; i++) {
+                document.getElementsByTagName('h1')[i].style = "font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-weight: bold; font-size: 3em; margin: 5px;"
+            }
+
+            for (i = 0; i < document.getElementsByTagName('aside')[0].children.length; i++) {
+                tag = document.getElementsByTagName('aside')[0].children[i]
+                if (tag.tagName == "H1" || tag.tagName == "H2") {
+                    tag.style = "margin: 0; font-size: 2em;"
+                }
+            }
+
+            document.getElementsByTagName('footer')[0].style = "clear: both; padding: 10px; background-color: azure; border: 2px solid #a8a8a8; box-shadow: 0px 0px 10px black; margin: 10px;"
+
+            document.getElementsByTagName('main')[0].style = "float: left; width: 450px; clear: left; padding: 10px; background-color: azure; border: 2px solid #a8a8a8; box-shadow: 0px 0px 10px black; margin: 10px;"
+
+            document.getElementsByTagName('nav')[0].style = "float: left; background-color: azure; border: 2px solid #a8a8a8; box-shadow: 0px 0px 10px black; margin: 10px;"
+
+            for (i = 0; i < document.getElementsByTagName('nav')[0].children.length; i++) {
+                tag = document.getElementsByTagName('nav')[0].children[i]
+                if (tag.tagName == "UL") {
+                    tag.style = "margin: 20px 0px;"
+                    for (j = 0; j < tag.children.length; j++) {
+                        if (tag.children[j].tagName == "LI") {
+                            tag.children[j].style = "width: 80px; margin-left: 10px;"
+                        }
+                    }
+                }
+            }
+        }
+
+        function skasuj() {
+            document.getElementsByTagName('header')[0].style = ""
+
+            document.getElementsByTagName('aside')[0].style = ""
+
+            for (i = 0; i < document.getElementsByTagName('h1').length; i++) {
+                document.getElementsByTagName('h1')[i].style = ""
+            }
+
+            for (i = 0; i < document.getElementsByTagName('aside')[0].children.length; i++) {
+                tag = document.getElementsByTagName('aside')[0].children[i]
+                if (tag.tagName == "h1" || tag == "h2") {
+                    tag.style = ""
+                }
+            }
+
+            document.getElementsByTagName('footer')[0].style = ""
+
+            document.getElementsByTagName('main')[0].style = ""
+
+            document.getElementsByTagName('nav')[0].style = ""
+
+            for (i = 0; i < document.getElementsByTagName('nav')[0].children.length; i++) {
+                tag = document.getElementsByTagName('nav')[0].children[i]
+                if (tag.tagName == "UL") {
+                    tag.style = ""
+                    for (j = 0; j < tag.children.length; j++) {
+                        if (tag.children[j].tagName == "LI") {
+                            tag.children[j].style = ""
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <form>
+        <input type="button" value="Ustaw" onclick="ustaw()">
+        <input type="button" value="Skasuj" onclick="skasuj()">
+    </form>
+</body>
+
+</html>
