@@ -1,7 +1,7 @@
 import re
 
 def match_word(string):
-    pat_letters = re.compile(r'[^\d|^\s]+')
+    pat_letters = re.compile(r'[^\W|^\d|^\s]+')
     res_letters = pat_letters.search(string)
     
     if res_letters:
