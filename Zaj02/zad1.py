@@ -1,10 +1,10 @@
-lancuch1 = u'''JĘZYK POLSKI
+lancuch1 = '''JĘZYK POLSKI
 ĄĘĆŚŹŻŁ
 ąęćśźżł'''
 
-lancuch2 = u'''Wciąż polski!
-ĄĘĆŚŹŻŁ
-ąęćśźżł'''
+lancuch2 = '''Wciąż polski!
+ąęćśźżł
+ĄĘĆŚŹŻŁ'''
 
 print((lancuch1+'\n'+lancuch2+'\n')*3, end='')
 
