@@ -21,11 +21,17 @@ class Test_TestIncrementDecrement(unittest.TestCase):
     def test_just_word_start(self):
         self.assertEqual(skrypt.match_word("Ala")[0], 0)
 
+    def test_just_word_number_nomatch(self):
+        self.assertEqual(skrypt.match_number("Ala"), None)
+
     def test_just_number_match(self):
         self.assertEqual(skrypt.match_number("1231")[1], "1231")
 
     def test_just_number_start(self):
         self.assertEqual(skrypt.match_number("1231")[0], 0)
+
+    def test_just_number_word_nomatch(self):
+        self.assertEqual(skrypt.match_word("1231"), None)
 
     def test_leading_space_word_match(self):
         self.assertEqual(skrypt.match_word("    1231Ala")[1], "Ala")
