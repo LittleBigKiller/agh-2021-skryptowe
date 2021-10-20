@@ -1,11 +1,11 @@
-from typy import slownik
-
 slownik = {}
 
 # print('Ładowanie modułu "{0}"'.format(__name__))
 
 def zapisz(arg_str):
     for char in arg_str:
+        if not char.isnumeric():
+            continue
         if char in slownik.keys():
             slownik[char] += 1
         else:

@@ -1,11 +1,11 @@
-from typy import lista
-
 lista = []
 
 # print('Ładowanie modułu "{0}"'.format(__name__))
 
 def zapisz(arg_str):
     for char in arg_str:
+        if not char.isnumeric():
+            continue
         found = False
         for item in lista:
             if item[0] == char:
