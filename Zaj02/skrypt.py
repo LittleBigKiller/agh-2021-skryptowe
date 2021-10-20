@@ -1,7 +1,9 @@
 import re
 
+pat_letters = re.compile(r'[^\W|^\d|^\s]+')
+pat_numbers = re.compile(r'\d+')
+
 def match_word(string):
-    pat_letters = re.compile(r'[^\W|^\d|^\s]+')
     res_letters = pat_letters.search(string)
     
     if res_letters:
@@ -10,7 +12,6 @@ def match_word(string):
         return None
 
 def match_number(string):
-    pat_numbers = re.compile(r'\d+')
     res_numbers = pat_numbers.search(string)
     
     if res_numbers:

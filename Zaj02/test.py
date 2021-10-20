@@ -2,7 +2,7 @@ import skrypt
 import unittest
 import re
 
-class Test_TestIncrementDecrement(unittest.TestCase):
+class Test_RegexMatch(unittest.TestCase):
     def test_word_match(self):
         self.assertEqual(skrypt.match_word("1231Ala")[1], "Ala")
 
