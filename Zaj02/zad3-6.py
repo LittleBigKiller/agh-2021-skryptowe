@@ -3,7 +3,7 @@ import getopt
 
 import lista, slownik
 
-if sys.argv:
+if len(sys.argv) > 1:
     arg_str = ''.join(sys.argv[2:])
 
     if sys.argv[1] == '--lista':

@@ -3,7 +3,7 @@ import getopt
 
 import lista, slownik
 
-if sys.argv:
+if len(sys.argv) > 1:
     try:
         opt, args = getopt.getopt(sys.argv[1:], '', ['modul='])
 
