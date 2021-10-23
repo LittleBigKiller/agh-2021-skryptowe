@@ -2,7 +2,7 @@ import unittest
 from day import Day, nthDayFrom
 
 
-class Test_TestIncrementDecrement(unittest.TestCase):
+class Test_TestDay(unittest.TestCase):
 
     def test_nth(self):
         self.assertEqual(nthDayFrom(1, Day.SAT), Day.SUN)
