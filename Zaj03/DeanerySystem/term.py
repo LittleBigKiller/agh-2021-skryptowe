@@ -8,7 +8,7 @@ class Term():
         self.duration = 90
 
     def __str__(self):
-        return f'{self.hour}:{self.minute} [{self.duration}]'
+        return f'{self._day} {self.hour}:{self.minute} [{self.duration}]'
 
     def getDay(self):
         return self._day

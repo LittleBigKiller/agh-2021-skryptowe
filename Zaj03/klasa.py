@@ -1,7 +1,7 @@
 class Klasa(object):
     tab = [1, 2, 3]
 
-    def __init__(self, ptab, zmienna1, zmienna2):
+    def __init__(self, ptab, zmienna1=0, zmienna2=0):
         print('Wywołano metodę \'__init__()\'')
         self.tab = ptab
         self._zmienna1 = zmienna1
@@ -12,6 +12,9 @@ class Klasa(object):
 
     def __str__(self):
         return 'Wywołano metodę \'__str__()\''
+
+    def __repr__(self):
+        return 'Wywołano metodę \'__repr__()\''
 
     def metodaInstancyjna(self):
         print('Wywołano metodę \'metodaInstancyjna()\'')
