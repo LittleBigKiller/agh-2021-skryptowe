@@ -15,6 +15,17 @@ class Test_TestDeanerySystem(unittest.TestCase):
         term.setTerm('27 X 2021 8:00 - 28 X 2021 8:00')
         self.assertEqual(str(term), 'Środa 8:00 [1440]')
 
+    def test_diffMonth(self):
+        term = Term(Day.MON, 8, 0)
+        term.setTerm('27 IX 2021 8:00 - 28 X 2021 8:00')
+        self.assertEqual(str(term), 'Poniedziałek 8:00 [45240]')
+
+    def test_diffYear(self):
+        term = Term(Day.MON, 8, 0)
+        term.setTerm('27 I 2020 8:00 - 28 X 2021 8:00')
+        self.assertEqual(str(term), 'Wtorek 8:00 [921240]')
+
+
 
 
 if __name__ == '__main__':

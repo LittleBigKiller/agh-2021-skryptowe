@@ -10,22 +10,28 @@ class Day(Enum):
     SUN = 7
 
     def __str__(self):
-        if self.value == 1:
-            day_name = 'Poniedziałek'
-        elif self.value == 2:
-            day_name = 'Wtorek'
-        elif self.value == 3:
-            day_name = 'Środa'
-        elif self.value == 4:
-            day_name = 'Czwartek'
-        elif self.value == 5:
-            day_name = 'Piątek'
-        elif self.value == 6:
-            day_name = 'Sobota'
-        elif self.value == 7:
-            day_name = 'Niedziela'
+        str_val = {
+            1: 'Poniedziałek',
+            2: 'Wtorek',
+            3: 'Środa',
+            4: 'Czwartek',
+            5: 'Piątek',
+            6: 'Sobota',
+            7: 'Niedziela'
+        }
+        return str_val[self.value]
 
-        return day_name
+    def __repr__(self):
+        str_val = {
+            1: 'Poniedziałek',
+            2: 'Wtorek',
+            3: 'Środa',
+            4: 'Czwartek',
+            5: 'Piątek',
+            6: 'Sobota',
+            7: 'Niedziela'
+        }
+        return str_val[self.value]
 
     def difference(self, day):
         diff = day.value - self.value

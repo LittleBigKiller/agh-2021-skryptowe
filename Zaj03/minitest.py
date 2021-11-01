@@ -1,5 +1,5 @@
 import unittest
-from DeanerySystem.day import Day
+from DeanerySystem.day import Day, nthDayFrom
 from DeanerySystem.term import Term
 
 
