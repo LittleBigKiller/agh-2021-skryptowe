@@ -1,58 +1,39 @@
 import sys
 import re
 
-def match_oc(lines):
-    if re.search(r'\/\*[\r\n|\n]*', lines):
-        return True
-    else:
-        return False
+def find_functions(lines):
+    # (?<!^)            - negative lookbehind, nie na początku
+    # \w+               - słowne znaki
+    # (?=\s+\()         - positive lookahead, przerwa dowolnej długości i otwarcie nawiasu
+    # (?![^\/\*]+\*\/)  - negative lookahead, nie w komentarzu
+    fun_magic = re.compile(r'(?<!^)\w+(?=\s+\()(?![^\/\*]+\*\/)')
     
-def match_occ(lines):
-    if re.search(r'\/\*.*', lines):
-        return True
+    fun_names = re.findall(fun_magic, lines)
+
+    return ''.join(['Deklaracja funkcji ' + x.strip() + '()\n' for x in fun_names])
+
+def find_comments(lines, fold=False):
+    # (?![^\/\*]+\*\/)  - positive lookahead, w komentarzu
+    # [^\*\/]+          - dowolne znaki poza '*' i '/', w dowolnej ilości (przynajmniej jeden)
+    com_magic = re.compile(r'(?=[^\/\*]+\*\/)[^\*\/]+')
+
+    com_names = re.findall(com_magic, lines)
+
+    if fold:
+        return '// ' + '\n//'.join(x.rstrip().replace('\n', ' ') for x in com_names)[1:]
     else:
-        return False
+        return ''.join(x.rstrip().replace('\n', '\n// ') for x in com_names)[1:]
 
-def match_cc(lines):
-    if re.search(r'\*\/[\r\n|\n]+', lines):
-        return True
-    else:
-        return False
-
-def main(fold=False):
-    f = open("./main.c", "r")
-
-    in_comment = False
-    comment_started = False
-    ret_str = ""
-
-    for line in f.readlines():
-        if not in_comment:
-            if match_oc(line):
-                in_comment = True
-            elif match_occ(line):
-                in_comment = True
-                ret_str += re.sub(r'\/\*', r'\/\/ ', line)
-            else:
-                ret_str += line
-        else:
-            if match_cc(line):
-                in_comment = False
-                comment_started = False
-            else:
-                if not fold or (fold and not comment_started):
-                    ret_str += '// ' + line
-                    comment_started = True
-                else:
-                    ret_str = ret_str[0:-2] + ' ' + line
-    return ret_str
-                
 if __name__ == '__main__':
+    file_content = open("./main.c", "r").read()
+
     if len(sys.argv) > 1:
         if sys.argv[1] == '--fold':
-            print(main(True))
+            print(find_comments(file_content, True))
         else:
-            print(main())
+            print(find_comments(file_content))
     else:
-        print(main())
+        print(find_comments(file_content))
+    
+    print(find_functions(file_content))
 
