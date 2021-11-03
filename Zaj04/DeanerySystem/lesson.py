@@ -1,5 +1,7 @@
 from .day import Day
 from .term import Term
+from .student import Student
+from slist import slist
 
 class Lesson():
     def __init__(self, timetable, term, name, teacherName, year):
@@ -8,6 +10,7 @@ class Lesson():
         self._name = name
         self._teacherName = teacherName
         self._year = year
+        self.__student_id = []
         self._full_time = self.calcFTValue()
 
     def calcFTValue(self):
@@ -20,6 +23,14 @@ class Lesson():
             return True
         else:
             return False
+
+    def __add__(self, sid):
+        if sid in map(Student.getId, slist) and len(self.__student_id) < 12:
+            self.__student_id.append(sid)
+
+    def __sub__(self, sid):
+        if sid in map(Student.getId, slist) and sid in self.__student_id:
+            self.__student_id.remove(sid)
 
     @property
     def timetable(self):
@@ -77,6 +88,10 @@ class Lesson():
             raise ValueError('rok musi być liczbą dodatnią')
         else:
             self._year = value
+
+    @property
+    def student_id(self):
+        return self.__student_id
 
     @property
     def full_time(self):
