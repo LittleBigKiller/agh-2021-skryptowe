@@ -118,14 +118,8 @@ class Timetable1:
 
         action_list = []
         for ac in actions:
-            if ac == 'd-':
-                action_list.append(Action.DAY_EARLIER)
-            elif ac == 'd+':
-                action_list.append(Action.DAY_LATER)
-            elif ac == 't-':
-                action_list.append(Action.TIME_EARLIER)
-            elif ac == 't+':
-                action_list.append(Action.TIME_LATER)
+            if ac in Action._value2member_map_:
+                action_list.append(Action(ac))
         return action_list
 
     def perform(self, actions: List[Action]):
