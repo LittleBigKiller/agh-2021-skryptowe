@@ -28,11 +28,18 @@ class Test_TestIncrementDecrement(unittest.TestCase):
         les0 = Lesson(tt0, ter0, "-", "-", 2)
         self.assertEqual(tt0.get(les0), None)
 
-    def test_busy_true(self):
+    def test_busy_match(self):
         tt0 = Timetable1()
         les0 = Lesson(tt0, Term(9, 35, Day.TUE), "-", "-", 2)
         tt0.put(les0)
         self.assertEqual(tt0.busy(les0.term), True)
+
+    def test_busy_overlap(self):
+        tt0 = Timetable1()
+        les0 = Lesson(tt0, Term(9, 35, Day.TUE), "-", "-", 2)
+        ter0 = Term(9, 00, Day.TUE)
+        tt0.put(les0)
+        self.assertEqual(tt0.busy(ter0), True)
 
     def test_busy_false(self):
         tt0 = Timetable1()

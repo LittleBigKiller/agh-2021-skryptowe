@@ -72,6 +72,21 @@ class Timetable1:
         for les in self.lesson_list:
             if les.term == term:
                 return True
+
+            les_start = (les.term.hour, les.term.minute)
+            les_end = les.term.getEndTime()
+            ter_start = (term.hour, term.minute)
+            ter_end = term.getEndTime()
+
+            if les_end > ter_start and les_end < ter_end:
+                return True
+            if ter_end > les_start and ter_end < les_end:
+                return True
+            if les_start > ter_start and les_start < ter_end:
+                return True
+            if ter_start > les_start and ter_start < les_end:
+                return True
+
         return False
 
     def put(self, lesson: Lesson) -> bool:
