@@ -26,7 +26,7 @@ class Lesson():
         return self.__timetable
 
     @timetable.setter
-    def term(self, value):
+    def timetable(self, value):
         if type(value) is not Timetable1:
             raise TypeError('timetable musi być typu \'Timetable1\'')
         else:
