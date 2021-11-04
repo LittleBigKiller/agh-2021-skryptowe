@@ -3,71 +3,71 @@ from .term import Term
 
 class Lesson():
     def __init__(self, timetable, term, name, teacherName, year):
-        self._timetable = timetable
-        self._term = term
-        self._name = name
-        self._teacherName = teacherName
-        self._year = year
-        self._full_time = self.calcFTValue()
+        self.__timetable = timetable
+        self.__term = term
+        self.__name = name
+        self.__teacherName = teacherName
+        self.__year = year
+        self.__full_time = self.calcFTValue()
 
     def calcFTValue(self):
-        if self._term.day.value < 5:
+        if self.__term.day.value < 5:
             return True
-        elif self._term.day.value > 5:
+        elif self.__term.day.value > 5:
             return False
         
-        if self._term.hour < 17:
+        if self.__term.hour < 17:
             return True
         else:
             return False
 
     @property
     def timetable(self):
-        return self._timetable
+        return self.__timetable
 
     @timetable.setter
     def term(self, value):
         if type(value) is not Timetable1:
             raise TypeError('timetable musi być typu \'Timetable1\'')
         else:
-            self._timetable = value
+            self.__timetable = value
 
     @property
     def term(self):
-        return self._term
+        return self.__term
 
     @term.setter
     def term(self, value):
         if type(value) is not Term:
             raise TypeError('term musi być typu \'Term\'')
         else:
-            self._term = value
+            self.__term = value
 
     @property
     def name(self):
-        return self._name
+        return self.__name
 
     @name.setter
     def name(self, value):
         if type(value) is not str:
             raise TypeError('name musi być typu \'str\'')
         else:
-            self._term = value
+            self.__term = value
 
     @property
     def teacherName(self):
-        return self._teacherName
+        return self.__teacherName
 
     @teacherName.setter
     def teacherName(self, value):
         if type(value) is not str:
             raise TypeError('teacherName musi być typu \'str\'')
         else:
-            self._teacherName = value
+            self.__teacherName = value
 
     @property
     def year(self):
-        return self._year
+        return self.__year
     
     @year.setter
     def year(self, value):
@@ -76,95 +76,95 @@ class Lesson():
         elif value <= 0:
             raise ValueError('rok musi być liczbą dodatnią')
         else:
-            self._year = value
+            self.__year = value
 
     @property
     def full_time(self):
-        return self._full_time
+        return self.__full_time
 
     def earlierDay(self):
-        ndv = self._term.day.value - 1
+        ndv = self.__term.day.value - 1
 
         if ndv < 1:
             return False
 
         nd = Day(ndv)
-        nt = Term(self._term.hour, self._term.minute, nd)
+        nt = Term(self.__term.hour, self.__term.minute, nd)
 
         if not self.timetable.can_be_transferred_to(nt, self.full_time):
             return False
 
-        self._term.day = nd 
+        self.__term.day = nd 
         return True
 
     def laterDay(self):
-        ndv = self._term.day.value + 1
+        ndv = self.__term.day.value + 1
 
         if ndv > 7:
             return False
 
         nd = Day(ndv)
-        nt = Term(self._term.hour, self._term.minute, nd)
+        nt = Term(self.__term.hour, self.__term.minute, nd)
 
         if not self.timetable.can_be_transferred_to(nt, self.full_time):
             return False
 
-        self._term.day = nd
+        self.__term.day = nd
         return True
 
     def earlierTime(self):
-        h_dif = self._term.duration // 60
-        m_dif = self._term.duration % 60
+        h_dif = self.__term.duration // 60
+        m_dif = self.__term.duration % 60
 
-        if self._term.minute - m_dif < 0:
+        if self.__term.minute - m_dif < 0:
             m_dif -= 60
             h_dif += 1
 
-        nt = Term(self._term.hour - h_dif, self._term.minute - m_dif, self._term.day)
+        nt = Term(self.__term.hour - h_dif, self.__term.minute - m_dif, self.__term.day)
 
         if not self.timetable.can_be_transferred_to(nt, self.full_time):
             return False
 
-        self._term.hour -= h_dif
-        self._term.minute -= m_dif
+        self.__term.hour -= h_dif
+        self.__term.minute -= m_dif
         return True
 
     def laterTime(self):
-        h_dif = self._term.duration // 60
-        m_dif = self._term.duration % 60
+        h_dif = self.__term.duration // 60
+        m_dif = self.__term.duration % 60
 
-        if self._term.minute + m_dif >= 60:
+        if self.__term.minute + m_dif >= 60:
             m_dif -= 60
             h_dif += 1
 
-        nt = Term(self._term.hour + h_dif, self._term.minute + m_dif, self._term.day)
+        nt = Term(self.__term.hour + h_dif, self.__term.minute + m_dif, self.__term.day)
 
         if not self.timetable.can_be_transferred_to(nt, self.full_time):
             return False
 
-        self._term.hour += h_dif
-        self._term.minute += m_dif
+        self.__term.hour += h_dif
+        self.__term.minute += m_dif
         return True
 
     def __str__(self):
-        if self._year == 1:
+        if self.__year == 1:
             year_str = 'Pierwszy rok'
-        elif self._year == 2:
+        elif self.__year == 2:
             year_str = 'Drugi rok'
-        elif self._year == 3:
+        elif self.__year == 3:
             year_str = 'Trzeci rok'
-        elif self._year == 4:
+        elif self.__year == 4:
             year_str = 'Czwarty rok'
-        elif self._year == 5:
+        elif self.__year == 5:
             year_str = 'Piąty rok'
 
-        if self._full_time:
+        if self.__full_time:
             time_str = 'stacjonarnych'
         else:
             time_str = 'niestacjonarnych'
 
-        return (f'{self._name} ({self._term.day} {self._term.printStartTime()}-{self._term.printEndTime()})\n'
+        return (f'{self.__name} ({self.__term.day} {self.__term.printStartTime()}-{self.__term.printEndTime()})\n'
                 f'{year_str} studiów {time_str}\n'
-                f'Prowadzący: {self._teacherName}')
+                f'Prowadzący: {self.__teacherName}')
 
 from .timetable1 import Timetable1

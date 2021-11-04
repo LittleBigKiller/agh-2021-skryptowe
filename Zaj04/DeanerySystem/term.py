@@ -2,14 +2,14 @@ from .day import Day
 
 class Term():
     def __init__(self, hour, minute, day, duration=90):
-        self._hour = hour
-        self._minute = minute
-        self._day = day
-        self._duration = duration
+        self.__hour = hour
+        self.__minute = minute
+        self.__day = day
+        self.__duration = duration
 
     @property
     def hour(self):
-        return self._hour
+        return self.__hour
 
     @hour.setter
     def hour(self, value):
@@ -18,11 +18,11 @@ class Term():
         elif value < 0 or value > 23:
             raise ValueError('Godzina musi należeć do przedziału 0 - 23')
         else:
-            self._hour = value
+            self.__hour = value
 
     @property
     def minute(self):
-        return self._minute
+        return self.__minute
 
     @minute.setter
     def minute(self, value):
@@ -31,22 +31,22 @@ class Term():
         elif value < 0 or value > 59:
             raise ValueError('Minuta musi należeć do przedziału 0 - 59')
         else:
-            self._minute = value
+            self.__minute = value
 
     @property
     def day(self):
-        return self._day
+        return self.__day
 
     @day.setter
     def day(self, value):
         if type(value) is not Day:
             raise TypeError('Dzień musi być typu \'Day\'')
         else:
-            self._day = value
+            self.__day = value
 
     @property
     def duration(self):
-        return self._duration
+        return self.__duration
 
     @duration.setter
     def duration(self, value):
@@ -55,38 +55,38 @@ class Term():
         elif value <=0:
             raise ValueError('Duration musi być dodatnie')
         else:
-            self._duration = value
+            self.__duration = value
 
     def __str__(self):
-        return f'{self._hour}:{self._minute} [{self._duration}]'
+        return f'{self.__hour}:{self.__minute} [{self.__duration}]'
 
     def earlierThan(self, termin):
-        if self._day.difference(termin.day) < 0:
+        if self.__day.difference(termin.day) < 0:
             return False
-        if self._day.difference(termin.day) == 0:
-            if termin.hour < self._hour:
+        if self.__day.difference(termin.day) == 0:
+            if termin.hour < self.__hour:
                 return False
-            if termin.hour == self._hour:
-                if termin.minute <= self._minute:
+            if termin.hour == self.__hour:
+                if termin.minute <= self.__minute:
                     return False
             return True
         return True
 
     def laterThan(self, termin):
-        if self._day.difference(termin.day) > 0:
+        if self.__day.difference(termin.day) > 0:
             return False
-        if self._day.difference(termin.day) == 0:
-            if termin.hour > self._hour:
+        if self.__day.difference(termin.day) == 0:
+            if termin.hour > self.__hour:
                 return False
-            if termin.hour == self._hour:
-                if termin.minute >= self._minute:
+            if termin.hour == self.__hour:
+                if termin.minute >= self.__minute:
                     return False
             return True
         return True
 
     def equals(self, termin):
-        if termin.hour == self._hour and termin.minute == self._minute and \
-            termin.duration == self._duration and self._day.difference(termin.day) == 0:
+        if termin.hour == self.__hour and termin.minute == self.__minute and \
+            termin.duration == self.__duration and self.__day.difference(termin.day) == 0:
             return True
         return False
 
@@ -106,15 +106,15 @@ class Term():
         return self.laterThan(termin) or self.equals(termin)
 
     def getEndTime(self):
-        add_hour = self._duration // 60
-        add_min = self._duration % 60
-        end_min = self._minute + add_min
+        add_hour = self.__duration // 60
+        add_min = self.__duration % 60
+        end_min = self.__minute + add_min
 
         if end_min >= 60:
             add_hour += 1
             end_min %= 60
 
-        end_hour = self._hour + add_hour
+        end_hour = self.__hour + add_hour
 
         return (end_hour, end_min)
 
@@ -123,13 +123,13 @@ class Term():
         return f'{timeTuple[0]:0>2}:{timeTuple[1]:0>2}'
 
     def printStartTime(self):
-        return f'{self._hour:0>2}:{self._minute:0>2}'
+        return f'{self.__hour:0>2}:{self.__minute:0>2}'
 
     def __sub__(self, termin):
-        add_hour = self._duration // 60
-        add_min = self._duration % 60
+        add_hour = self.__duration // 60
+        add_min = self.__duration % 60
         fin_dur = 0
-        h_dif = self._hour + add_hour - termin.hour
-        m_dif = self._minute + add_min - termin.minute
+        h_dif = self.__hour + add_hour - termin.hour
+        m_dif = self.__minute + add_min - termin.minute
         fin_dur += h_dif * 60 + m_dif
         return Term(termin.hour, termin.minute, fin_dur)
