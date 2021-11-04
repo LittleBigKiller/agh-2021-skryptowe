@@ -108,9 +108,8 @@ class Timetable1:
             raise TypeError('Argument \'put()\' musi być typu \'Lesson\'')
             return False
         else:
-            for les in self.lesson_list:
-                if les.term == lesson.term:
-                    return False
+            if self.busy(lesson.term):
+                return False
             self.lesson_list.append(lesson)
             return True
         return False
