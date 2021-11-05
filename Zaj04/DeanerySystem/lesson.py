@@ -1,5 +1,6 @@
 from .day import Day
 from .term import Term
+from .teacher import Teacher
 
 class Lesson():
     def __init__(self, timetable, term, name, teacherName, year):
@@ -7,6 +8,7 @@ class Lesson():
         self.__term = term
         self.__name = name
         self.__teacherName = teacherName
+        self.__teacher = None
         self.__year = year
         self.__full_time = self.calcFTValue()
 
@@ -22,11 +24,38 @@ class Lesson():
             return False
 
     @property
+    def teacher(self):
+        return self.__teacher
+
+    @teacher.setter
+    def teacher(self, value):
+        if type(value) is not Teacher:
+            raise TypeError('teacher musi być typu \'Teacher\'')
+        else:
+            self.__teacher = value
+
+    def __add__(self, value):
+        if type(value) is Teacher:
+            new_hours = value.minute_count + self.__term.duration
+            if new_hours / 45 <= 6:
+                value.minute_count = new_hours
+                self - self.__teacher
+                self.__teacher = value
+        return self.__teacher
+
+    def __sub__(self, value):
+        if type(value) is Teacher:
+            if value == self.__teacher:
+                value.minute_count -= self.__term.duration
+                self.__teacher = None
+        return self.__teacher
+    
+    @property
     def timetable(self):
         return self.__timetable
 
     @timetable.setter
-    def term(self, value):
+    def timetable(self, value):
         if type(value) is not Timetable1:
             raise TypeError('timetable musi być typu \'Timetable1\'')
         else:
