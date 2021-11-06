@@ -1,7 +1,7 @@
 import unittest
 from DeanerySystem import Day, Term, Lesson, Timetable1 
 
-class Test_TestIncrementDecrement(unittest.TestCase):
+class Test_TestLesson(unittest.TestCase):
 
     def test_earlierDay_ft_true(self):
         tt0 = Timetable1()
