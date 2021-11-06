@@ -1,19 +1,19 @@
-
 import unittest
 from DeanerySystem import Day, Term, Lesson, Action, Timetable1 
 
-class Test_TestIncrementDecrement(unittest.TestCase):
+class Test_TestTimetable1(unittest.TestCase):
 
     def test_put_true(self):
         tt0 = Timetable1()
         les0 = Lesson(tt0, Term(9, 35, Day.TUE), "-", "-", 2)
         self.assertEqual(tt0.put(les0), True)
 
-    def test_put_false(self):
+    def test_put_value_error(self):
         tt0 = Timetable1()
         les0 = Lesson(tt0, Term(9, 35, Day.TUE), "-", "-", 2)
         tt0.put(les0)
-        self.assertEqual(tt0.put(les0), False)
+        with self.assertRaises(ValueError):
+            tt0.put(les0)
 
     def test_get_lesson(self):
         tt0 = Timetable1()
@@ -77,6 +77,13 @@ class Test_TestIncrementDecrement(unittest.TestCase):
         actl = [Action.DAY_EARLIER, Action.DAY_LATER, Action.TIME_EARLIER, Action.TIME_LATER]
         self.assertEqual(tt0.parse(strl), actl)
 
+    def test_parase_value_error(self):
+        tt0 = Timetable1()
+        strl = ['d-', 'd+', 't-', 't+', 'catch me']
+        actl = [Action.DAY_EARLIER, Action.DAY_LATER, Action.TIME_EARLIER, Action.TIME_LATER]
+        with self.assertRaises(ValueError):
+            tt0.parse(strl)
+
     def test_peform(self):
         tt0 = Timetable1()
         tt1 = Timetable1()
@@ -86,7 +93,7 @@ class Test_TestIncrementDecrement(unittest.TestCase):
         tt0.put(les1)
         tt1.put(les1)
         tt1.perform(actl)
-        self.assertEqual(tt1.lesson_list, tt0.lesson_list)
+        self.assertEqual(tt1.lesson_dict, tt0.lesson_dict)
 
 
 if __name__ == '__main__':

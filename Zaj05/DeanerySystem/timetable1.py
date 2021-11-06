@@ -1,15 +1,15 @@
 from typing import List
 
-from .day import Day
-from .term import Term
-from .lesson import Lesson
-from .action import Action
-from .basictimetable import BasicTimetable
+from DeanerySystem.day import Day
+from DeanerySystem.term import Term
+from DeanerySystem.lesson import Lesson
+from DeanerySystem.action import Action
+from DeanerySystem.basictimetable import BasicTimetable
 
 class Timetable1(BasicTimetable):
 
     def __init__(self):
-        self.lesson_list = []
+        super().__init__()
     
     def can_be_transferred_to(self, term: Term, full_time: bool) -> bool:
         if term.hour < 8:
@@ -37,14 +37,29 @@ class Timetable1(BasicTimetable):
         return False
 
     def busy(self, term: Term) -> bool:
-        for les in self.lesson_list:
+        for les in list(self.lesson_dict.values()):
             if les.term == term:
                 return True
+
+            les_start = (les.term.hour, les.term.minute)
+            les_end = les.term.getEndTime()
+            ter_start = (term.hour, term.minute)
+            ter_end = term.getEndTime()
+
+            if les_end > ter_start and les_end < ter_end:
+                return True
+            if ter_end > les_start and ter_end < les_end:
+                return True
+            if les_start > ter_start and les_start < ter_end:
+                return True
+            if ter_start > les_start and ter_start < les_end:
+                return True
+
         return False
 
     def __str__(self):
         timetab = []
-        for les in self.lesson_list:
+        for les in list(self.lesson_dict.values()):
             timetab.append(les.term)
         timetab = sorted(timetab, key=lambda t: t.printStartTime())
 
@@ -60,7 +75,7 @@ class Timetable1(BasicTimetable):
         for c, t in enumerate(timetab):
             disptab[0][c + 1] = f'{t.printStartTime()}-{t.printEndTime()}'
 
-        for les in self.lesson_list:
+        for les in list(self.lesson_dict.values()):
             disptab[les.term.day.value][timetab.index(les.term) + 1] = les.name
 
         b = ''

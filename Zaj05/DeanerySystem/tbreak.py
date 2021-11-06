@@ -1,22 +1,22 @@
-from .term import Term
+from DeanerySystem.term import Term
 
 class Break:
     def __init__(self, term):
-        self._term = term
+        self.__term = term
 
     @property
     def term(self):
-        return self._term
+        return self.__term
 
     @term.setter
     def term(self, value):
-        if type(value) is not Term:
-            raise TypeError('term musi być klasy \'Term\'')
+        if type(value) is not BasicTerm:
+            raise TypeError('term musi być klasy \'BasicTerm\'')
         else:
-            self._term = value
+            self.__term = value
 
     def __str__(self):
         return "Przerwa"
 
     def getTerm(self):
-        return self._term
+        return self.__term

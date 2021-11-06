@@ -1,19 +1,18 @@
-
 from typing import List
 
-from .day import Day
-from .term import Term
-from .lesson import Lesson
-from .action import Action
-from .tbreak import Break
-from .basictimetable import BasicTimetable
+from DeanerySystem.day import Day
+from DeanerySystem.term import Term
+from DeanerySystem.lesson import Lesson
+from DeanerySystem.action import Action
+from DeanerySystem.tbreak import Break
+from DeanerySystem.basictimetable import BasicTimetable
 
 class Timetable2(BasicTimetable):
     skipBreaks = False
 
     def __init__(self, breaks: List[Break]):
         self.breaks = breaks
-        self.lesson_list = []
+        super().__init__()
     
     def can_be_transferred_to(self, term: Term, full_time: bool) -> bool:
         if term.hour < 8:
@@ -59,7 +58,7 @@ class Timetable2(BasicTimetable):
     def busy(self, term: Term) -> bool:
         ts = term.getStartTime()
         te = term.getEndTime()
-        for les in self.lesson_list:
+        for les in list(self.lesson_dict.values()):
             if term.day == les.term.day:
                 ls = les.term.getStartTime()
                 le = les.term.getEndTime()
@@ -82,7 +81,7 @@ class Timetable2(BasicTimetable):
             raise TypeError('Argument \'put()\' musi być typu \'Lesson\'')
             return False
         else:
-            for les in self.lesson_list:
+            for les in list(self.lesson_dict.values()):
                 if les.term == lesson.term:
                     raise ValueError(f'Podany termin jest zajęty przez inną lekcję')
                     return False
@@ -91,13 +90,13 @@ class Timetable2(BasicTimetable):
                 raise ValueError('Podany termin jest zajęty przez przerwę')
                 return False
 
-            self.lesson_list.append(lesson)
+            self.lesson_dict[f'{lesson.term.printStartTime()}-{lesson.term.printEndTime()}-{lesson.term.day}'] = lesson
             return True
         return False
 
     def __str__(self):
         timetab = []
-        for les in self.lesson_list:
+        for les in list(self.lesson_dict.values()):
             tstr = f'{les.term.printStartTime()}-{les.term.printEndTime()}'
             if not tstr in timetab:
                 timetab.append(tstr)
@@ -121,7 +120,7 @@ class Timetable2(BasicTimetable):
         for c, t in enumerate(timetab):
             disptab[0][c + 1] = f'{t}'
 
-        for les in self.lesson_list:
+        for les in list(self.lesson_dict.values()):
             tstr = f'{les.term.printStartTime()}-{les.term.printEndTime()}'
             disptab[les.term.day.value][timetab.index(tstr) + 1] = les.name
 

@@ -1,27 +1,26 @@
-
 from typing import List
 
-from .day import Day
-from .term import Term
-from .lesson import Lesson
-from .action import Action
+from DeanerySystem.day import Day
+from DeanerySystem.term import Term
+from DeanerySystem.lesson import Lesson
+from DeanerySystem.action import Action
 
 
 class BasicTimetable:
 
     def __init__(self):
-        self.lesson_list = []
+        self.lesson_dict = {}
     
     def put(self, lesson: Lesson) -> bool:
         if type(lesson) is not Lesson:
             raise TypeError('Argument \'put()\' musi być typu \'Lesson\'')
             return False
         else:
-            for les in self.lesson_list:
+            for les in list(self.lesson_dict.values()):
                 if les.term == lesson.term:
                     raise ValueError(f'Podany termin jest zajęty')
                     return False
-            self.lesson_list.append(lesson)
+            self.lesson_dict[f'{lesson.term.printStartTime()}-{lesson.term.printEndTime()}-{lesson.term.day}'] = lesson
             return True
         raise ValueError(f'Podany termin jest zajęty')
         return False
@@ -30,14 +29,8 @@ class BasicTimetable:
     def parse(self, actions: List[str]) -> List[Action]:
         action_list = []
         for ac in actions:
-            if ac == 'd-':
-                action_list.append(Action.DAY_EARLIER)
-            elif ac == 'd+':
-                action_list.append(Action.DAY_LATER)
-            elif ac == 't-':
-                action_list.append(Action.TIME_EARLIER)
-            elif ac == 't+':
-                action_list.append(Action.TIME_LATER)
+            if ac in Action._value2member_map_:
+                action_list.append(Action(ac))
             else:
                 raise ValueError(f'Translacja {ac} jest niepoprawna')
         return action_list
@@ -46,20 +39,20 @@ class BasicTimetable:
         lc = 0
         for ac in actions:
             if ac == Action.DAY_EARLIER:
-                self.lesson_list[lc].earlierDay()
+                list(self.lesson_dict.values())[lc].earlierDay()
             elif ac == Action.DAY_LATER:
-                self.lesson_list[lc].laterDay()
+                list(self.lesson_dict.values())[lc].laterDay()
             elif ac == Action.TIME_EARLIER:
-                self.lesson_list[lc].earlierTime()
+                list(self.lesson_dict.values())[lc].earlierTime()
             elif ac == Action.TIME_LATER:
-                self.lesson_list[lc].laterTime()
+                list(self.lesson_dict.values())[lc].laterTime()
 
             lc += 1
-            lc %= len(self.lesson_list)
+            lc %= len(list(self.lesson_dict.values()))
 
     def get(self, term: Term) -> Lesson:
         ltr = None
-        for les in self.lesson_list:
+        for les in list(self.lesson_dict.values()):
             if les.term == term:
                 ltr = les
                 break
