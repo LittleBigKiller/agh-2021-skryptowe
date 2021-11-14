@@ -1,4 +1,4 @@
-from DeanerySystem.term import Term
+from DeanerySystem.term import BasicTerm
 
 class Break:
     def __init__(self, term):
