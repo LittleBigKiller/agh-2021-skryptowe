@@ -10,7 +10,7 @@ class BasicTimetable:
 
     def __init__(self):
         self.lesson_dict = {}
-    
+
     def put(self, lesson: Lesson) -> bool:
         if type(lesson) is not Lesson:
             raise TypeError('Argument \'put()\' musi być typu \'Lesson\'')
@@ -24,7 +24,6 @@ class BasicTimetable:
             return True
         raise ValueError(f'Podany termin jest zajęty')
         return False
-
 
     def parse(self, actions: List[str]) -> List[Action]:
         action_list = []
@@ -57,4 +56,3 @@ class BasicTimetable:
                 ltr = les
                 break
         return ltr
-

@@ -1,5 +1,6 @@
 from DeanerySystem.day import Day
 
+
 class BasicTerm():
     def __init__(self, hour, minute, duration=90):
         self.__hour = hour
@@ -40,7 +41,7 @@ class BasicTerm():
     def duration(self, value):
         if type(value) is not int:
             raise TypeError('Duration musi być liczbą całkowitą')
-        elif value <=0:
+        elif value <= 0:
             raise ValueError('Duration musi być dodatnie')
         else:
             self.__duration = value
@@ -100,7 +101,7 @@ class BasicTerm():
         end_hour = self.__hour + add_hour
 
         return (end_hour, end_min)
-    
+
     def getCompTime(self):
         et = self.getEndTime()
         return (self.hour, self.minute, et[0], et[1])

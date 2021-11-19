@@ -1,6 +1,7 @@
 from DeanerySystem.day import Day
 from DeanerySystem.basicterm import BasicTerm
 
+
 class Term(BasicTerm):
     def __init__(self, hour, minute, day, duration=90):
         super().__init__(hour, minute, duration)
@@ -43,7 +44,7 @@ class Term(BasicTerm):
 
     def equals(self, termin):
         if termin.hour == self.hour and termin.minute == self.minute and \
-            termin.duration == self.duration and self.day.difference(termin.day) == 0:
+                termin.duration == self.duration and self.day.difference(termin.day) == 0:
             return True
         return False
 
@@ -61,4 +62,3 @@ class Term(BasicTerm):
 
     def __ge__(self, termin):
         return self.laterThan(termin) or self.equals(termin)
-

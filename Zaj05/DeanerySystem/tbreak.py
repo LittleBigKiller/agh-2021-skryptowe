@@ -1,5 +1,6 @@
 from DeanerySystem.term import BasicTerm
 
+
 class Break:
     def __init__(self, term):
         self.__term = term

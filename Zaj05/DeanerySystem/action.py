@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class Action(Enum):
     DAY_EARLIER = 'd-'
     DAY_LATER = 'd+'

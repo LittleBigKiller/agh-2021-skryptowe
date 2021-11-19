@@ -1,5 +1,6 @@
 import unittest
-from DeanerySystem import Day, Term, Lesson, Action, Timetable1 
+from DeanerySystem import Day, Term, Lesson, Action, Timetable1
+
 
 class Test_TestTimetable1(unittest.TestCase):
 
@@ -74,13 +75,15 @@ class Test_TestTimetable1(unittest.TestCase):
     def test_parase(self):
         tt0 = Timetable1()
         strl = ['d-', 'd+', 't-', 't+']
-        actl = [Action.DAY_EARLIER, Action.DAY_LATER, Action.TIME_EARLIER, Action.TIME_LATER]
+        actl = [Action.DAY_EARLIER, Action.DAY_LATER,
+                Action.TIME_EARLIER, Action.TIME_LATER]
         self.assertEqual(tt0.parse(strl), actl)
 
     def test_parase_value_error(self):
         tt0 = Timetable1()
         strl = ['d-', 'd+', 't-', 't+', 'catch me']
-        actl = [Action.DAY_EARLIER, Action.DAY_LATER, Action.TIME_EARLIER, Action.TIME_LATER]
+        actl = [Action.DAY_EARLIER, Action.DAY_LATER,
+                Action.TIME_EARLIER, Action.TIME_LATER]
         with self.assertRaises(ValueError):
             tt0.parse(strl)
 
@@ -89,7 +92,8 @@ class Test_TestTimetable1(unittest.TestCase):
         tt1 = Timetable1()
         ter1 = Term(8, 0, Day.WED)
         les1 = Lesson(tt1, ter1, 'less1', 'less1', 2)
-        actl = [Action.DAY_EARLIER, Action.DAY_LATER, Action.TIME_EARLIER, Action.TIME_LATER]
+        actl = [Action.DAY_EARLIER, Action.DAY_LATER,
+                Action.TIME_EARLIER, Action.TIME_LATER]
         tt0.put(les1)
         tt1.put(les1)
         tt1.perform(actl)

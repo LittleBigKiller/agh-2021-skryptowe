@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class Day(Enum):
     MON = 1
     TUE = 2
@@ -36,6 +37,7 @@ class Day(Enum):
     def difference(self, day):
         diff = day.value - self.value
         return diff + 7 if diff < -3 else (diff - 7 if diff > 3 else diff)
+
 
 def nthDayFrom(n, day):
     new_day = day.value + n

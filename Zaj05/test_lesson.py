@@ -1,5 +1,6 @@
 import unittest
-from DeanerySystem import Day, Term, Lesson, Timetable1 
+from DeanerySystem import Day, Term, Lesson, Timetable1
+
 
 class Test_TestLesson(unittest.TestCase):
 
@@ -22,7 +23,6 @@ class Test_TestLesson(unittest.TestCase):
         tt0 = Timetable1()
         lesson3 = Lesson(tt0, Term(9, 35, Day.SAT), "-", "-", 2)
         self.assertEqual(lesson3.earlierDay(), False)
-    
 
     def test_laterDay_ft_true(self):
         tt0 = Timetable1()
@@ -44,7 +44,6 @@ class Test_TestLesson(unittest.TestCase):
         lesson3 = Lesson(tt0, Term(9, 35, Day.SUN), "-", "-", 2)
         self.assertEqual(lesson3.laterDay(), False)
 
-
     def test_earlierTime_ft_true(self):
         tt0 = Timetable1()
         lesson0 = Lesson(tt0, Term(9, 35, Day.TUE), "-", "-", 2)
@@ -64,7 +63,6 @@ class Test_TestLesson(unittest.TestCase):
         tt0 = Timetable1()
         lesson3 = Lesson(tt0, Term(17, 35, Day.FRI), "-", "-", 2)
         self.assertEqual(lesson3.earlierTime(), False)
-    
 
     def test_laterTime_ft_true(self):
         tt0 = Timetable1()
@@ -85,7 +83,6 @@ class Test_TestLesson(unittest.TestCase):
         tt0 = Timetable1()
         lesson3 = Lesson(tt0, Term(17, 35, Day.SUN), "-", "-", 2)
         self.assertEqual(lesson3.laterTime(), False)
-
 
 
 if __name__ == '__main__':
