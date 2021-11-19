@@ -1,6 +1,7 @@
 from DeanerySystem.day import Day
 from DeanerySystem.term import Term
 
+
 class Lesson():
     def __init__(self, timetable, term, name, teacherName, year):
         self.__timetable = timetable
@@ -15,7 +16,7 @@ class Lesson():
             return True
         elif self.__term.day.value > 5:
             return False
-        
+
         if self.__term.hour < 17:
             return True
         else:
@@ -68,7 +69,7 @@ class Lesson():
     @property
     def year(self):
         return self.__year
-    
+
     @year.setter
     def year(self, value):
         if type(value) is not int:
@@ -94,7 +95,7 @@ class Lesson():
         if not self.timetable.can_be_transferred_to(nt, self.full_time):
             return False
 
-        self.__term.day = nd 
+        self.__term.day = nd
         return True
 
     def laterDay(self):
@@ -120,8 +121,9 @@ class Lesson():
             m_dif -= 60
             h_dif += 1
 
-        nt = Term(self.__term.hour - h_dif, self.__term.minute - m_dif, self.__term.day)
-        
+        nt = Term(self.__term.hour - h_dif,
+                  self.__term.minute - m_dif, self.__term.day)
+
         if hasattr(self.timetable, 'breaks'):
             if not self.timetable.skipBreaks:
                 bo = self.timetable.overlapsBreak(nt)
@@ -137,7 +139,8 @@ class Lesson():
                         m_dif -= 60
                         h_dif += 1
 
-                    nt = Term(self.__term.hour - h_dif, self.__term.minute - m_dif, self.__term.day)
+                    nt = Term(self.__term.hour - h_dif,
+                              self.__term.minute - m_dif, self.__term.day)
 
         if not self.timetable.can_be_transferred_to(nt, self.full_time):
             return False
@@ -154,7 +157,8 @@ class Lesson():
             m_dif -= 60
             h_dif += 1
 
-        nt = Term(self.__term.hour + h_dif, self.__term.minute + m_dif, self.__term.day)
+        nt = Term(self.__term.hour + h_dif,
+                  self.__term.minute + m_dif, self.__term.day)
 
         if hasattr(self.timetable, 'breaks'):
             if not self.timetable.skipBreaks:
@@ -167,13 +171,12 @@ class Lesson():
                     h_dif += bo[1] // 60
                     m_dif += bo[1] % 60
 
-                    if self.__term.minute - m_dif < 0:
+                    if self.__term.minute + m_dif > 60:
                         m_dif -= 60
                         h_dif += 1
 
-                    nt = Term(self.__term.hour - h_dif, self.__term.minute - m_dif, self.__term.day)
-
-
+                    nt = Term(self.__term.hour + h_dif,
+                              self.__term.minute + m_dif, self.__term.day)
 
         if not self.timetable.can_be_transferred_to(nt, self.full_time):
             return False
@@ -202,6 +205,6 @@ class Lesson():
         return (f'{self.__name} ({self.__term.day} {self.__term.printStartTime()}-{self.__term.printEndTime()})\n'
                 f'{year_str} studiów {time_str}\n'
                 f'Prowadzący: {self.__teacherName}')
-
-from .timetable1 import Timetable1
-from .timetable2 import Timetable2
+                
+from DeanerySystem.timetable1 import Timetable1
+from DeanerySystem.timetable2 import Timetable2

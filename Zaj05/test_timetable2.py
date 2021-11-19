@@ -1,5 +1,6 @@
 import unittest
-from DeanerySystem import Day, Term, Lesson, Action, Break, BasicTerm, Timetable2 
+from DeanerySystem import Day, Term, Lesson, Action, Break, BasicTerm, Timetable2
+
 
 class Test_Timetable2(unittest.TestCase):
 
@@ -84,14 +85,16 @@ class Test_Timetable2(unittest.TestCase):
         bl = [Break(BasicTerm(9, 30, 5)), Break(BasicTerm(11, 5, 10))]
         tt0 = Timetable2(bl)
         strl = ['d-', 'd+', 't-', 't+']
-        actl = [Action.DAY_EARLIER, Action.DAY_LATER, Action.TIME_EARLIER, Action.TIME_LATER]
+        actl = [Action.DAY_EARLIER, Action.DAY_LATER,
+                Action.TIME_EARLIER, Action.TIME_LATER]
         self.assertEqual(tt0.parse(strl), actl)
 
     def test_parase_value_error(self):
         bl = [Break(BasicTerm(9, 30, 5)), Break(BasicTerm(11, 5, 10))]
         tt0 = Timetable2(bl)
         strl = ['d-', 'd+', 't-', 't+', 'catch me']
-        actl = [Action.DAY_EARLIER, Action.DAY_LATER, Action.TIME_EARLIER, Action.TIME_LATER]
+        actl = [Action.DAY_EARLIER, Action.DAY_LATER,
+                Action.TIME_EARLIER, Action.TIME_LATER]
         with self.assertRaises(ValueError):
             tt0.parse(strl)
 
@@ -100,27 +103,34 @@ class Test_Timetable2(unittest.TestCase):
         tt0 = Timetable2(bl)
         tt1 = Timetable2(bl)
         ter1 = Term(8, 0, Day.WED)
+        ter2 = Term(8, 0, Day.THU)
         les1 = Lesson(tt1, ter1, 'less1', 'less1', 2)
-        actl = [Action.DAY_EARLIER, Action.DAY_LATER, Action.TIME_EARLIER, Action.TIME_LATER]
-        tt0.put(les1)
+        les2 = Lesson(tt0, ter2, 'less2', 'less2', 2)
+        actl = [Action.DAY_EARLIER, Action.DAY_LATER,
+                Action.DAY_LATER, Action.TIME_EARLIER, Action.TIME_LATER]
+        tt0.put(les2)
         tt1.skipBreaks = False
         tt1.put(les1)
         tt1.perform(actl)
-        self.assertEqual(tt1.lesson_dict, tt0.lesson_dict)
+        self.assertTrue(list(tt1.lesson_dict.values())[
+                        0].term == list(tt0.lesson_dict.values())[0].term)
 
     def test_peform_skipBreakTrue(self):
         bl = [Break(BasicTerm(9, 30, 5)), Break(BasicTerm(11, 5, 10))]
         tt0 = Timetable2(bl)
         tt1 = Timetable2(bl)
         ter1 = Term(8, 0, Day.WED)
+        ter2 = Term(9, 35, Day.THU)
         les1 = Lesson(tt1, ter1, 'less1', 'less1', 2)
-        actl = [Action.DAY_EARLIER, Action.DAY_LATER, Action.TIME_EARLIER, Action.TIME_LATER]
-        tt0.put(les1)
+        les2 = Lesson(tt0, ter2, 'less2', 'less2', 2)
+        actl = [Action.DAY_EARLIER, Action.DAY_LATER,
+                Action.DAY_LATER, Action.TIME_EARLIER, Action.TIME_LATER]
+        tt0.put(les2)
         tt1.skipBreaks = True
         tt1.put(les1)
         tt1.perform(actl)
-        self.assertEqual(tt1.lesson_dict, tt0.lesson_dict)
-
+        self.assertTrue(list(tt1.lesson_dict.values())[
+                        0].term == list(tt0.lesson_dict.values())[0].term)
 
 
 if __name__ == '__main__':
