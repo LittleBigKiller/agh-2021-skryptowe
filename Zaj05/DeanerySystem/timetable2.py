@@ -83,7 +83,7 @@ class Timetable2(BasicTimetable):
             return False
         else:
             for les in list(self.lesson_dict.values()):
-                if not self.busy(lesson.term):
+                if self.busy(lesson.term):
                     raise ValueError(
                         f'Podany termin jest zajęty przez inną lekcję')
                     return False

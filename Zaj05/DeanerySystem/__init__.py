@@ -7,3 +7,4 @@ from DeanerySystem.basicterm import BasicTerm
 from DeanerySystem.timetable1 import Timetable1
 from DeanerySystem.timetable2 import Timetable2
 from DeanerySystem.basictimetable import BasicTimetable
+from DeanerySystem.compoundtimetable import CompoundTimetable
