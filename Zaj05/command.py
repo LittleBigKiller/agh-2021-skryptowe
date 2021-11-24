@@ -8,13 +8,103 @@ class Command(ABC):
     def execute(self):
         pass
 
+class PrintCommand(Command):
+
+    def __init__(self, rcv):
+        self.rcv = rcv
+
+    def execute(self, tt):
+        self.rcv.do_print(tt)
+
+
+class DayPlusCommand(Command):
+
+    def __init__(self, rcv):
+        self.rcv = rcv
+
+    def execute(self, tt):
+        self.rcv.do_dl(tt)
+
+
+class DayMinusCommand(Command):
+
+    def __init__(self, rcv):
+        self.rcv = rcv
+
+    def execute(self, tt):
+        self.rcv.do_de(tt)
+
+
+class TimePlusCommand(Command):
+
+    def __init__(self, rcv):
+        self.rcv = rcv
+
+    def execute(self, tt):
+        self.rcv.do_tl(tt)
+
+
+class TimeMinusCommand(Command):
+
+    def __init__(self, rcv):
+        self.rcv = rcv
+
+    def execute(self, tt):
+        self.rcv.do_te(tt)
+
+
+class SkipPlusCommand(Command):
+
+    def __init__(self, rcv):
+        self.rcv = rcv
+
+    def execute(self, tt):
+        self.rcv.do_sbt(tt)
+
+
+class SkipMinusCommand(Command):
+
+    def __init__(self, rcv):
+        self.rcv = rcv
+
+    def execute(self, tt):
+        self.rcv.do_sbf(tt)
+
 
 class Invoker():
 
-    def __init__(self, receiver, tt_dict):
-        self.rcv = receiver
+    _on_print = None
+    _on_day_plus = None
+    _on_day_minus = None
+    _on_time_plus = None
+    _on_time_minus = None
+    _on_skip_plus = None
+    _on_skip_minus = None
+
+    def __init__(self, tt_dict):
         self.tt_dict = tt_dict
         self.valid_cmd = ['p', 'd+', 'd-', 't+', 't-', 'sb+', 'sb-']
+
+    def set_on_print(self, command):
+        self._on_print = command
+
+    def set_on_day_plus(self, command):
+        self._on_day_plus = command
+
+    def set_on_day_minus(self, command):
+        self._on_day_minus = command
+
+    def set_on_time_plus(self, command):
+        self._on_time_plus = command
+
+    def set_on_time_minus(self, command):
+        self._on_time_minus = command
+
+    def set_on_skip_plus(self, command):
+        self._on_skip_plus = command
+
+    def set_on_skip_minus(self, command):
+        self._on_skip_minus = command
 
     def parse_exec(self, cmdstr):
         cmdtab = cmdstr.split()
@@ -32,20 +122,28 @@ class Invoker():
             return False
         
         cmd = cmdtab[1]
+        tt = self.tt_dict[cmdtab[0]]
         if cmd == 'p':
-            self.rcv.do_print(self.tt_dict[cmdtab[0]])
+            if isinstance(self._on_print, Command):
+                self._on_print.execute(tt)
         elif cmd == 'd+':
-            self.rcv.do_dl(self.tt_dict[cmdtab[0]])
+            if isinstance(self._on_day_plus, Command):
+                self._on_day_plus.execute(tt)
         elif cmd == 'd-':
-            self.rcv.do_de(self.tt_dict[cmdtab[0]])
+            if isinstance(self._on_day_minus, Command):
+                self._on_day_minus.execute(tt)
         elif cmd == 't+':
-            self.rcv.do_tl(self.tt_dict[cmdtab[0]])
+            if isinstance(self._on_time_plus, Command):
+                self._on_time_plus.execute(tt)
         elif cmd == 't-':
-            self.rcv.do_te(self.tt_dict[cmdtab[0]])
+            if isinstance(self._on_time_minus, Command):
+                self._on_time_minus.execute(tt)
         elif cmd == 'sb+':
-            self.rcv.do_sbt(self.tt_dict[cmdtab[0]])
+            if isinstance(self._on_skip_plus, Command):
+                self._on_skip_plus.execute(tt)
         elif cmd == 'sb-':
-            self.rcv.do_sbf(self.tt_dict[cmdtab[0]])
+            if isinstance(self._on_skip_minus, Command):
+                self._on_skip_minus.execute(tt)
         return True
 
 
@@ -81,6 +179,7 @@ class Receiver:
 
 if __name__ == '__main__':
     rcv = Receiver()
+
     bl = [Break(BasicTerm(9, 30, 5)), Break(BasicTerm(11, 5, 10))]
     tt1 = Timetable1()
     tt2 = Timetable2(bl)
@@ -91,7 +190,16 @@ if __name__ == '__main__':
     tt1.put(les1)
     tt2.put(les2)
     tts = {'tt1': tt1, 'tt2': tt2}
-    inv = Invoker(rcv, tts)
+
+    inv = Invoker(tts)
+    inv.set_on_print(PrintCommand(rcv))
+    inv.set_on_day_plus(DayPlusCommand(rcv))
+    inv.set_on_day_minus(DayMinusCommand(rcv))
+    inv.set_on_time_plus(TimePlusCommand(rcv))
+    inv.set_on_time_minus(TimeMinusCommand(rcv))
+    inv.set_on_skip_plus(SkipPlusCommand(rcv))
+    inv.set_on_skip_minus(SkipMinusCommand(rcv))
+
     while True:
         try:
             text = input()
