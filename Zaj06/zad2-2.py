@@ -1,3 +1,4 @@
+'''
 import sys
 from collections import Counter
 
@@ -20,6 +21,8 @@ Counter(map(lambda x: len(x), sys.stdin.read().split()))
 dict(Counter(map(lambda x: len(x), sys.stdin.read().split())))
 
 # gotowa funkcja:
+print(dict(Counter(map(lambda x: len(x), sys.stdin.read().split()))))
 '''
+
+# oneliner:
 import sys; from collections import Counter; print(dict(Counter(map(lambda x: len(x), sys.stdin.read().split()))))
-'''
