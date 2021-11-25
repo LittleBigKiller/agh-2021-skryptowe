@@ -69,7 +69,7 @@ class Operacje:
     def ud_roznica(self, x, y):
         print(f'{x} - {y} = {x - y}')
 
-    # funkcja setitem oprócz ustawiania odpowiednich wartości, również refefiniuje odpowiednią funkcje dekorowaną
+    # funkcja setitem oprócz ustawiania odpowiednich wartości, również redefiniuje odpowiednią funkcje dekorowaną
     def __setitem__(self, key, value):
         if key == 'suma':
             self.argumentySuma = value
