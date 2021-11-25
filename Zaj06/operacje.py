@@ -22,7 +22,7 @@ def argumenty(pargs):
             # jeżeli mamy za mało podanych argumentów, żeby je uzupełnić - podnosimy TypeError
             if gnum < pnum:
                 raise TypeError(
-                    f'{func.__name__} takes exactly {pnum} arguments ({gnum} given)')
+                    f'{func.__name__} takes exactly {pnum-1} arguments ({gnum-1} given)')
 
             # dodajemy kolejne argumenty aż finałowa lista będzie odpowiedniej długości
             ctr = 0
