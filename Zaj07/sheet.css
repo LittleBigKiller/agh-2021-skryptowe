@@ -5,7 +5,15 @@ aside {
     padding: 5px;
 }
 
-aside h1,
+aside h1 {
+    margin: 0;
+    font-size: 2em;
+    animation-name: red2blue;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
 aside h2 {
     margin: 0;
     font-size: 2em;
@@ -24,32 +32,6 @@ footer {
 
     to {
         color: blue;
-    }
-}
-
-@keyframes blue2red {
-    from {
-        color: blue;
-    }
-
-    to {
-        color: red;
-    }
-}
-
-@media screen and (max-width: 992px) and (min-width: 768px) {
-    header h1 {
-        color: red;
-        animation-name: blue2red;
-        animation-duration: 500ms;
-    }
-}
-
-@media screen and (max-width: 768px) {
-    header h1 {
-        color: blue;
-        animation-name: red2blue;
-        animation-duration: 500ms;
     }
 }
 
@@ -75,6 +57,7 @@ main h1 {
 
 main pre {
     margin: 0;
+    overflow-x: auto;
 }
 
 nav {
@@ -94,8 +77,31 @@ nav li {
     background-color: azure;
 }
 
-.polak-box {
+.glowing-box {
     border: 2px solid #a8a8a8;
     box-shadow: 0px 0px 10px black;
     margin: 10px;
+}
+
+@media screen and (min-aspect-ratio: 1/16) and (max-aspect-ratio: 19/32) {
+
+    body {
+        margin: 0;
+    }
+
+    aside,
+    header,
+    footer,
+    main,
+    nav {
+        box-sizing: border-box;
+        width: 100vw;
+        float: none;
+    }
+
+    .glowing-box {
+        border: 2px solid #a8a8a8;
+        box-shadow: 0px 0px 10px black;
+        margin: 10px 0;
+    }
 }
