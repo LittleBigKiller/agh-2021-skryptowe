@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <title>
+    Tytuł strony / Page Title
+  </title>
+  <style>
+    @keyframes why {
+      0% {
+        transform: rotateY(0);
+        left: 0px;
+      }
+
+      50% {
+        transform: rotateY(180deg);
+        left: 250px;
+      }
+
+      100% {
+        transform: rotateX(180deg);
+        left: 0px;
+      }
+    }
+
+    .anim-me-pls {
+      transform-origin: center;
+      position: relative;
+      animation-name: why;
+      animation-duration: 4s;
+      animation-iteration-count: infinite;
+      animation-direction: alternate;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="w3-bar w3-light-grey w3-large">
+    <a href="#" class="w3-bar-item">Dziekanat</a>
+    <div class="w3-dropdown-hover">
+      <button class="w3-button w3-grey">Studia</button>
+      <div class="w3-dropdown-content w3-bar-block w3-card-4">
+        <a href="#" class="w3-bar-item w3-button">Link 1</a>
+        <a href="#" class="w3-bar-item w3-button">Link 2</a>
+        <a href="#" class="w3-bar-item w3-button">Link 3</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="w3-container">
+    <h1>
+      Wydział IET
+    </h1>
+  </div>
+
+  <div class="w3-container">
+    <div class="w3-card-4 anim-me-pls w3-half">
+      <div class="w3-container w3-center">
+        <p>Jan Kowalski</p>
+      </div>
+      <img src="img1.png">
+      <div class="w3-container w3-center">
+        <p>Jakiś Tekst</p>
+      </div>
+    </div>
+    <div class="w3-card-4 anim-me-pls w3-half">
+      <div class="w3-container w3-center">
+        <p>Jan Kowalski</p>
+      </div>
+      <img src="img2.png">
+      <div class="w3-container w3-center">
+        <p>Jakiś Tekst</p>
+      </div>
+    </div>
+    <div class="w3-card-4 anim-me-pls w3-half">
+      <div class="w3-container w3-center">
+        <p>Jan Kowalski</p>
+      </div>
+      <img src="img3.png">
+      <div class="w3-container w3-center">
+        <p>Jakiś Tekst</p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="w3-container">
+
+    <h3>
+      Footer
+    </h3>
+  </div>
+</body>
+
+</html>
