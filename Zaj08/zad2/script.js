@@ -1,5 +1,20 @@
 'use strict'
 
+var expect = chai.expect;
+
+function sum(x, y) {
+    return x + y;
+}
+
+describe('The sum() function', function() {
+    it('Returns 4 for 2+2', function() {
+        expect(sum(2, 2)).to.equal(4);
+    });
+    it('Returns 0 for -2+2', function() {
+        expect(sum(-2, 2)).to.equal(0);
+    });
+});
+
 var total = 0
 
 function cyfry(napis) {
@@ -49,53 +64,53 @@ describe("funkcje script.js", function() {
     total = 0
 
     it("cyfry_sameCyfry", function() {
-        chai.assert.equal(cyfry('111'), 3)
+        expect(cyfry('111')).to.equal(3)
     })
     it("litery_sameCyfry", function() {
-        chai.assert.equal(litery('111'), 0)
+        expect(litery('111')).to.equal(0)
     })
     it("suma_sameCyfry", function() {
-        chai.assert.equal(suma('111'), 111)
+        expect(suma('111')).to.equal(111)
     })
 
     it("cyfry_sameLitery", function() {
-        chai.assert.equal(cyfry('aa'), 0)
+        expect(cyfry('aa')).to.equal(0)
     })
     it("litery_sameLitery", function() {
-        chai.assert.equal(litery('aa'), 2)
+        expect(litery('aa')).to.equal(2)
     })
     it("suma_sameLitery", function() {
-        chai.assert.equal(suma('aa'), 111)
+        expect(suma('aa')).to.equal(111)
     })
 
     it("cyfry_literyCyfry", function() {
-        chai.assert.equal(cyfry('aa11'), 2)
+        expect(cyfry('aa11')).to.equal(2)
     })
     it("litery_literyCyfry", function() {
-        chai.assert.equal(litery('aa11'), 2)
+        expect(litery('aa11')).to.equal(2)
     })
     it("suma_literyCyfry", function() {
-        chai.assert.equal(suma('aa11'), 111)
+        expect(suma('aa11')).to.equal(111)
     })
 
     it("cyfry_cyfryLitery", function() {
-        chai.assert.equal(cyfry('11aa'), 2)
+        expect(cyfry('11aa')).to.equal(2)
     })
     it("litery_cyfryLitery", function() {
-        chai.assert.equal(litery('11aa'), 2)
+        expect(litery('11aa')).to.equal(2)
     })
     it("suma_cyfryLitery", function() {
-        chai.assert.equal(suma('11aa'), 122)
+        expect(suma('11aa')).to.equal(122)
     })
 
-    it("cyfry_cyfryLitery", function() {
-        chai.assert.equal(cyfry(''), 0)
+    it("cyfry_pustyNapis", function() {
+        expect(cyfry('')).to.equal(0)
     })
-    it("litery_cyfryLitery", function() {
-        chai.assert.equal(litery(''), 0)
+    it("litery_pustyNapis", function() {
+        expect(litery('')).to.equal(0)
     })
-    it("suma_cyfryLitery", function() {
-        chai.assert.equal(suma(''), 122)
+    it("suma_pustyNapis", function() {
+        expect(suma('')).to.equal(122)
     })
 })
 /* */
