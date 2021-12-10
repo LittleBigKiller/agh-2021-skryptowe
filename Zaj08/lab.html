@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laboratorium</title>
+</head>
+
+<body>
+
+    <form>
+        <textarea></textarea>
+        <input type="button" value="Kliknij">
+        <input type="button" value="Kliknij">
+    </form>
+
+    <script>
+        function setStorage() {
+            console.log(document.forms[0].elements[0].value)
+
+            sessionStorage.setItem('test', document.forms[0].elements[0].value)
+        }
+
+        function getStorage() {
+            console.log(sessionStorage.getItem('test'))
+        }
+
+        document.forms[0].elements[1].onclick = setStorage
+        document.forms[0].elements[2].onclick = getStorage
+    </script>
+</body>
+
+</html>
