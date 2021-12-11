@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form>
+        <input type="number" value="10">
+    </form>
+
+    <span>0</span>
+    <span>0</span>
+    <span>0</span>
+    <span>0</span>
+    <span>0</span>
+    <span>0</span>
+    <span>0</span>
+    <span>0</span>
+    <span>0</span>
+    <span>0</span>
+
+    <script>
+        var loop_val = 0;
+
+        setInterval(() => {
+            // W Firefoxie to nie zachowuje się poprawnie, więc obejście przez DOM0
+            // loop_val = document.getElementsByTagName('input')[0].getAttribute('value')
+            loop_val = document.getElementsByTagName('input')[0].value
+
+            if (loop_val > 0) {
+                loop_val -= 1
+
+                // w Firefoxie .setAttribute() nie zachowuje się poprawnie, więc obejście przez DOM0
+                // https://developer.mozilla.org/en-US/docs/Web/API/Element/setAttribute#gecko_notes
+                // document.getElementsByTagName('input')[0].setAttribute('value', loop_val)
+                document.getElementsByTagName('input')[0].value = loop_val
+
+                for (let i = 0; i < 10; i++) {
+                    document.getElementsByTagName('span')[i].childNodes[0].nodeValue = loop_val
+                }
+            }
+        }, 1000);
+    </script>
+</body>
+
+</html>
