@@ -6,6 +6,15 @@
     <title>
         Tytuł Strony
     </title>
+
+    <style>
+        .azure {
+            background-color: azure;
+            border: 2px solid #a8a8a8;
+            box-shadow: 0px 0px 10px black;
+            margin: 10px;
+        }
+    </style>
 </head>
 
 <body>
@@ -97,9 +106,10 @@ A gdzieniegdzie ton twardszy jak grzmot: to strzelanie.
 
     <script>
         function ustaw() {
-            document.getElementsByTagName('header')[0].style = "background-color: azure; border: 2px solid #a8a8a8; box-shadow: 0px 0px 10px black; margin: 10px;"
+            document.getElementsByTagName('header')[0].classList.add('azure')
 
-            document.getElementsByTagName('aside')[0].style = "float: right; width: 550px; padding: 5px; background-color: azure; border: 2px solid #a8a8a8; box-shadow: 0px 0px 10px black; margin: 10px;"
+            document.getElementsByTagName('aside')[0].style = "float: right; width: 550px; padding: 5px"
+            document.getElementsByTagName('aside')[0].classList.add('azure')
 
             for (i = 0; i < document.getElementsByTagName('h1').length; i++) {
                 document.getElementsByTagName('h1')[i].style = "font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-weight: bold; font-size: 3em; margin: 5px;"
@@ -112,11 +122,14 @@ A gdzieniegdzie ton twardszy jak grzmot: to strzelanie.
                 }
             }
 
-            document.getElementsByTagName('footer')[0].style = "clear: both; padding: 10px; background-color: azure; border: 2px solid #a8a8a8; box-shadow: 0px 0px 10px black; margin: 10px;"
+            document.getElementsByTagName('footer')[0].style = "clear: both; padding: 10px"
+            document.getElementsByTagName('footer')[0].classList.add('azure')
 
-            document.getElementsByTagName('main')[0].style = "float: left; width: 450px; clear: left; padding: 10px; background-color: azure; border: 2px solid #a8a8a8; box-shadow: 0px 0px 10px black; margin: 10px;"
+            document.getElementsByTagName('main')[0].style = "float: left; width: 450px; clear: left; padding: 10px"
+            document.getElementsByTagName('main')[0].classList.add('azure')
 
-            document.getElementsByTagName('nav')[0].style = "float: left; background-color: azure; border: 2px solid #a8a8a8; box-shadow: 0px 0px 10px black; margin: 10px;"
+            document.getElementsByTagName('nav')[0].style = "float: left"
+            document.getElementsByTagName('nav')[0].classList.add('azure')
 
             for (i = 0; i < document.getElementsByTagName('nav')[0].children.length; i++) {
                 tag = document.getElementsByTagName('nav')[0].children[i]
@@ -133,8 +146,10 @@ A gdzieniegdzie ton twardszy jak grzmot: to strzelanie.
 
         function skasuj() {
             document.getElementsByTagName('header')[0].style = ""
+            document.getElementsByTagName('header')[0].classList = []
 
             document.getElementsByTagName('aside')[0].style = ""
+            document.getElementsByTagName('aside')[0].classList = []
 
             for (i = 0; i < document.getElementsByTagName('h1').length; i++) {
                 document.getElementsByTagName('h1')[i].style = ""
@@ -148,10 +163,13 @@ A gdzieniegdzie ton twardszy jak grzmot: to strzelanie.
             }
 
             document.getElementsByTagName('footer')[0].style = ""
+            document.getElementsByTagName('footer')[0].classList = []
 
             document.getElementsByTagName('main')[0].style = ""
+            document.getElementsByTagName('main')[0].classList = []
 
             document.getElementsByTagName('nav')[0].style = ""
+            document.getElementsByTagName('nav')[0].classList = []
 
             for (i = 0; i < document.getElementsByTagName('nav')[0].children.length; i++) {
                 tag = document.getElementsByTagName('nav')[0].children[i]
