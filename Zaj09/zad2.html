@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="libs/canvasjs.min.js"></script>
+</head>
+
+<body>
+    <form>
+        <input type="button" value="Start" onclick="start()">
+        <input type="button" value="Stop" onclick="stop()">
+        <input type="number" name="delay" id="MNum">
+    </form>
+
+    <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+
+    <script>
+        var SetIntervalTime = []
+        var SetTimeoutTime = []
+        var N = 10 // 2+
+        var M = null
+
+        var stopped = true
+
+        var IntervalHandle = null
+        var TimeoutHandle = null
+        var dataInterval = []
+        var dataTimeout = []
+
+        for (let i = 0; i < N - 1; i++) {
+            dataInterval.push({
+                x: i + 1,
+                y: 0
+            })
+            dataTimeout.push({
+                x: i + 1,
+                y: 0
+            })
+        }
+
+        console.log(dataInterval)
+        console.log(dataTimeout)
+
+        var chartHandle = new CanvasJS.Chart("chartContainer", {
+            title: {
+                text: "Średni czas wykonania"
+            },
+            axisX: {
+                title: "Numer Okresu",
+                minimum: 0.5,
+                maximum: N - 0.5,
+                interval: 1
+            },
+            axisY: {
+                title: "Czas [ms]",
+                suffix: " ms",
+                minimum: 0,
+                maximum: M,
+            },
+            legend: {
+                cursor: "pointer",
+                fontSize: 16,
+                itemclick: toggleDataSeries
+            },
+            toolTip: {
+                shared: true
+            },
+            data: [{
+                    name: "Interval",
+                    type: "column",
+                    yValueFormatString: "#0 ms",
+                    showInLegend: true,
+                    dataPoints: dataInterval
+                },
+                {
+                    name: "Timeout",
+                    type: "column",
+                    yValueFormatString: "#0 ms",
+                    showInLegend: true,
+                    dataPoints: dataTimeout
+                }
+            ]
+        })
+        chartHandle.render()
+
+        function toggleDataSeries(e) {
+            if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                e.dataSeries.visible = false;
+            } else {
+                e.dataSeries.visible = true;
+            }
+            chartHandle.render();
+        }
+
+        function start() {
+            stopped = false
+
+            M = parseInt(document.getElementById("MNum").value)
+
+            if (M <= 0 || isNaN(M)) {
+                console.error('Brak poprawnego M')
+                return
+            }
+
+            if (IntervalHandle === null) {
+                IntervalHandle = setInterval(doTimeConsumingCallculationsWithSetInterval, M)
+            }
+
+            if (TimeoutHandle === null) {
+                TimeoutHandle = setTimeout(doTimeConsumingCallculationsWithSetTimeout, M)
+            }
+
+            requestAnimationFrame(drawChart)
+        }
+
+        function stop() {
+            stopped = true
+
+            clearInterval(IntervalHandle)
+            IntervalHandle = null
+
+            clearTimeout(TimeoutHandle)
+            TimeoutHandle = null
+        }
+
+        function drawChart() {
+            console.log('draw', SetIntervalTime.length, SetTimeoutTime.length)
+
+            if (SetIntervalTime.length < 2) {
+                requestAnimationFrame(drawChart)
+                return
+            }
+
+            if (SetTimeoutTime.length < 2) {
+                requestAnimationFrame(drawChart)
+                return
+            }
+
+            // var intAvg = SetIntervalTime.reduce((a, b) => a + b, 0) / SetIntervalTime.length
+            // var timAvg = SetTimeoutTime.reduce((a, b) => a + b, 0) / SetTimeoutTime.length
+
+            for (let i = 0; i < SetIntervalTime.length - 1; i++) {
+                dataInterval[i].y = SetIntervalTime[i + 1] - SetIntervalTime[i]
+            }
+
+            for (let i = 0; i < SetIntervalTime.length - 1; i++) {
+                dataTimeout[i].y = SetTimeoutTime[i + 1] - SetTimeoutTime[i]
+            }
+
+            chartHandle.render()
+
+            if (!stopped) {
+                requestAnimationFrame(drawChart)
+            }
+        }
+
+        function doTimeConsumingCallculationsWithSetInterval() {
+            SetIntervalTime.push(performance.now())
+            if (SetIntervalTime.length > N) {
+                SetIntervalTime.shift()
+            }
+
+            // calculatePrimes(1000, 1000000000)
+            calculatePrimes(1000, 1000000)
+
+            console.log("WithSetInterval")
+        }
+
+        function doTimeConsumingCallculationsWithSetTimeout() {
+            SetTimeoutTime.push(performance.now())
+            if (SetTimeoutTime.length > N) {
+                SetTimeoutTime.shift()
+            }
+
+            // calculatePrimes(1000, 1000000000)
+            calculatePrimes(1000, 1000000)
+
+            console.log("WithSetTimeout")
+
+            TimeoutHandle = setTimeout(doTimeConsumingCallculationsWithSetTimeout, M)
+        }
+
+        function calculatePrimes(iterations, multiplier) {
+            var primes = []
+            for (var i = 0; i < iterations; i++) {
+                var candidate = i * (multiplier * Math.random())
+                var isPrime = true
+                for (var c = 2; c <= Math.sqrt(candidate); ++c) {
+                    if (candidate % c === 0) {
+                        // not prime
+                        isPrime = false
+                        break
+                    }
+                }
+                if (isPrime) {
+                    primes.push(candidate)
+                }
+            }
+            return primes
+        }
+    </script>
+</body>
+
+</html>
