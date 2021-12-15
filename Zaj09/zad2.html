@@ -31,20 +31,24 @@
         var TimeoutHandle = null
         var dataInterval = []
         var dataTimeout = []
+        
+        function resetChart() {
+            dataInterval = []
+            dataTimeout = []
 
-        for (let i = 0; i < N - 1; i++) {
-            dataInterval.push({
-                x: i + 1,
-                y: 0
-            })
-            dataTimeout.push({
-                x: i + 1,
-                y: 0
-            })
+            for (let i = 0; i < N - 1; i++) {
+                dataInterval.push({
+                    x: i + 1,
+                    y: 0
+                })
+                dataTimeout.push({
+                    x: i + 1,
+                    y: 0
+                })
+            }
         }
 
-        console.log(dataInterval)
-        console.log(dataTimeout)
+        resetChart()
 
         var chartHandle = new CanvasJS.Chart("chartContainer", {
             title: {
@@ -103,6 +107,7 @@
             M = parseInt(document.getElementById("MNum").value)
 
             if (M <= 0 || isNaN(M)) {
+                alert('Brak poprawnego M')
                 console.error('Brak poprawnego M')
                 return
             }
@@ -129,8 +134,6 @@
         }
 
         function drawChart() {
-            console.log('draw', SetIntervalTime.length, SetTimeoutTime.length)
-
             if (SetIntervalTime.length < 2) {
                 requestAnimationFrame(drawChart)
                 return
@@ -148,7 +151,7 @@
                 dataInterval[i].y = SetIntervalTime[i + 1] - SetIntervalTime[i]
             }
 
-            for (let i = 0; i < SetIntervalTime.length - 1; i++) {
+            for (let i = 0; i < SetTimeoutTime.length - 1; i++) {
                 dataTimeout[i].y = SetTimeoutTime[i + 1] - SetTimeoutTime[i]
             }
 
@@ -167,8 +170,6 @@
 
             // calculatePrimes(1000, 1000000000)
             calculatePrimes(1000, 1000000)
-
-            console.log("WithSetInterval")
         }
 
         function doTimeConsumingCallculationsWithSetTimeout() {
@@ -179,8 +180,6 @@
 
             // calculatePrimes(1000, 1000000000)
             calculatePrimes(1000, 1000000)
-
-            console.log("WithSetTimeout")
 
             TimeoutHandle = setTimeout(doTimeConsumingCallculationsWithSetTimeout, M)
         }
