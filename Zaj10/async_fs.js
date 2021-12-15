@@ -6,8 +6,10 @@ async function checkExistsIsDirOrFile(res, fpath) {
     if (exists) {
       fs.stat(fpath, (err, stats) => {
         if (stats.isFile()) {
-          res.write(`${fpath} is a file`);
-          res.end();
+          fs.readFile(fpath, 'utf8', (err, data) => {
+            res.write(`${data}`);
+            res.end();
+          })
         }
         else if (stats.isDirectory()) {
           res.write(`${fpath} is a directory`);

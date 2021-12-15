@@ -5,6 +5,7 @@ var givenpath = process.argv[2]
 console.log('Istnieje?', checkExists(givenpath))
 console.log('Katalog?', checkIsDir(givenpath))
 console.log('Plik?', checkIsFile(givenpath))
+console.log('Zawartość?', readFile(givenpath))
 
 if (checkIsFile(givenpath)) {
   fs.readFile(givenpath, 'utf8', (err, data) => {
@@ -48,6 +49,16 @@ function checkIsFile(fpath) {
   }
 }
 
+function readFile(fpath) {
+  if (checkIsFile(fpath)) {
+    return fs.readFileSync(fpath, {encoding:'utf8'})
+  }
+  else {
+    return null
+  }
+}
+
 exports.checkExists = checkExists
 exports.checkIsDir = checkIsDir
 exports.checkIsFile = checkIsFile
+exports.readFile = readFile

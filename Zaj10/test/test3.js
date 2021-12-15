@@ -5,12 +5,12 @@ var supertest = require("supertest");
 var server = supertest.agent("http://localhost:8080");
 
 // UNIT test begin
-describe('GET /submit?fpath=async_fs.js', function () {
-  it('respond with "async_fs.js is a file"', function (done) {
+describe('GET /submit?fpath=readme.txt', function () {
+  it('respond with contents of readme.txt', function (done) {
     server
-      .get('/submit?fpath=async_fs.js')
+      .get('/submit?fpath=readme.txt')
       .expect('Content-Type', /text\/plain/)
-      .expect(200, "async_fs.js is a file", done);
+      .expect(200, "test4me", done);
   });
 });
 
