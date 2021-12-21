@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table,
+        th,
+        td,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p {
+            border: 1px solid black;
+        }
+
+        * {
+            position: relative;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <h1>h1</h1>
+    <p>para</p>
+    <h2>h2</h2>
+    <h3>h3</h3>
+    <h4>h4</h4>
+    <h5>h5</h5>
+    <h6>h6</h6>
+    <table>
+        <tr>
+            <td>0</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>5</td>
+            <td>6</td>
+            <td>7</td>
+            <td>8</td>
+            <td>9</td>
+            <td>10</td>
+            <td>11</td>
+        </tr>
+    </table> -->
+    <script>
+        function getRandomInt(max) {
+            return Math.floor(Math.random() * max);
+        }
+
+        function clickH(e) {
+            // console.log(e.target.tagName)
+            switch (e.target.tagName) {
+                case 'H1':
+                    points += 1
+                    break;
+                case 'H2':
+                    points += 2
+                    break;
+                case 'H3':
+                    points += 3
+                    break;
+                case 'H4':
+                    points += 4
+                    break;
+                case 'H5':
+                    points += 5
+                    break;
+                case 'H6':
+                    points += 6
+                    break;
+                case 'P':
+                    points += 1
+                    break;
+                case 'TD':
+                    points += (Array.prototype.slice.call(e.target.parentElement.children).indexOf(e.target) + 1)
+                    break;
+                default:
+                    points -= 1
+                    break;
+            }
+            console.log('points', points)
+        }
+
+        var points = 0
+
+        var spawnable = ['table']
+        var prev = null
+
+        document.addEventListener('click', clickH)
+
+        var startTime = performance.now()
+
+        var intH = setInterval(() => {
+            if (performance.now() - startTime > 30000) {
+                clearInterval(intH)
+                return null
+            }
+
+            console.log('points', points)
+            if (prev !== null) {
+                document.body.removeChild(prev)
+            }
+
+            nName = spawnable[getRandomInt(spawnable.length)]
+            if (nName != 'table') {
+                newElem = document.createElement(nName)
+                newElem.textContent = 'CLICK ME'
+                document.body.appendChild(newElem)
+                prev = newElem
+            } else {
+                newElem = document.createElement(nName)
+                tr = newElem.appendChild(document.createElement('tr'))
+                for (let i = 0; i < getRandomInt(15) + 1; i++) {
+                    td = document.createElement('td')
+                    td.textContent = i
+                    tr.appendChild(td)
+                }
+                document.body.appendChild(newElem)
+                prev = newElem
+            }
+            newElem.style.left = '' + getRandomInt(500) + 'px'
+            newElem.style.top = '' + getRandomInt(500) + 'px'
+        }, 2000)
+    </script>
+</body>
+
+</html>
