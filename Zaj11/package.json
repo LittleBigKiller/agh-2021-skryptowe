@@ -1,5 +1,5 @@
 {
-  "name": "zaj11-zad1",
+  "name": "zaj11",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -15,5 +15,10 @@
     "express": "^4.17.2",
     "morgan": "^1.10.0",
     "pug": "^3.0.2"
+  },
+  "devDependencies": {
+    "chai": "^4.3.4",
+    "chai-json": "^1.0.0",
+    "supertest": "^6.1.6"
   }
 }
