@@ -7,6 +7,20 @@ var chai = require('chai');
 var expect = chai.expect;
 chai.use(require('chai-json'));
 
+const mongoose = require('mongoose')
+const { Schema } = mongoose;
+mongoose.connect('mongodb://localhost:27017/skryptowe');
+const opSchema = new Schema({
+  x: Number,
+  y: Number,
+  op: String
+})
+const Op = mongoose.model('Op', opSchema);
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
+
 // This agent refers to PORT where program is runninng.
 var server = supertest.agent("http://localhost:3000");
 
@@ -107,6 +121,66 @@ describe('GET /json/:name (using example.json)', function () {
           }
         }
 
+      })
+      .end(done)
+  })
+})
+
+describe('GET /calculate/:operation/:x/:y (using example.json)', function () {
+  it('respond with html', function (done) {
+    server
+      .get('/calculate/+/1/1')
+      .expect('Content-Type', /html/)
+      .expect(200, done);
+  });
+
+  it('check for invalid operations', function (done) {
+    server
+      .get('/calculate/x/1/1')
+      .expect('Content-Type', /html/)
+      .expect(400)
+      .end(done)
+  })
+
+  it('save valid operation to database', function (done) {
+    var x = getRandomInt(65535)
+    var y = getRandomInt(65535)
+    server
+      .get('/calculate/-/' + x + '/' + y)
+      .expect('Content-Type', /html/)
+      .expect(200)
+      .expect(async (res) => {
+        var json = await Op.find({ x: x, y: y, op: '-' });
+
+        console.log(json.length)
+
+        expect(json.length).to.be.greaterThanOrEqual(1)
+      })
+      .end(done)
+  })
+})
+
+describe('GET /results', function () {
+  it('respond with html', function (done) {
+    server
+      .get('/results')
+      .expect('Content-Type', /html/)
+      .expect(200, done);
+  });
+
+  it('contain correct value for all operations', function (done) {
+    server
+      .get('/results')
+      .expect('Content-Type', /html/)
+      .expect(200)
+      .expect(async (res) => {
+        var match = res.text.match(/(?<=<tr>).*?(?=<\/tr>)/gm)
+        for (line of match) {
+          var lm = line.match(/(?<=<td>).*?(?=<\/td>)/gm)
+          if (lm !== null) {
+            assert.equal(eval(lm[0] + lm[1] + lm[2]), lm[3])
+          }
+        }
       })
       .end(done)
   })
