@@ -143,12 +143,12 @@ describe('Zaj11', function () {
 
       it('respond correct string in h1 html', function (done) {
         function testValue(res) {
-          if (!(res.text.match(/(?<=<h1>)[0-9]+(?=<\/h1>)/gm)[0] == 3))
+          if (!(res.text.match(/(?<=<h1>).*?(?=<\/h1>)/gm) == '5 - 7 = -2'))
             throw new Error('response doesn\'t match')
         }
 
         server
-          .get('/')
+          .get('/calculate/-/5/7')
           .expect('Content-Type', /html/)
           .expect(200)
           .expect(testValue)
