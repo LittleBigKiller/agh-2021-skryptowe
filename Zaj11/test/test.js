@@ -133,7 +133,7 @@ describe('Zaj11', function () {
 
   describe('Zad3', function () {
 
-    describe('GET /calculate/:operation/:x/:y (using example.json)', function () {
+    describe('GET /calculate/:operation/:x/:y', function () {
       it('respond with html', function (done) {
         server
           .get('/calculate/+/1/1')
@@ -141,15 +141,14 @@ describe('Zaj11', function () {
           .expect(200, done);
       });
 
-      it('respond correct string in h1', function (done) {
+      it('respond correct string in h1 html', function (done) {
         function testValue(res) {
-          console.log(res.text.match(/(?<=<h1>).*?(?=<\/h1>)/gm))
-          if (!(res.text.match(/(?<=<h1>).*?(?=<\/h1>)/gm)[0] == '2 + 2 = 4'))
+          if (!(res.text.match(/(?<=<h1>)[0-9]+(?=<\/h1>)/gm)[0] == 3))
             throw new Error('response doesn\'t match')
         }
 
         server
-          .get('/calculate/+/2/2')
+          .get('/')
           .expect('Content-Type', /html/)
           .expect(200)
           .expect(testValue)
