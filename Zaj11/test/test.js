@@ -141,6 +141,21 @@ describe('Zaj11', function () {
           .expect(200, done);
       });
 
+      it('respond correct string in h1', function (done) {
+        function testValue(res) {
+          console.log(res.text.match(/(?<=<h1>).*?(?=<\/h1>)/gm))
+          if (!(res.text.match(/(?<=<h1>).*?(?=<\/h1>)/gm)[0] == '2 + 2 = 4'))
+            throw new Error('response doesn\'t match')
+        }
+
+        server
+          .get('/calculate/+/2/2')
+          .expect('Content-Type', /html/)
+          .expect(200)
+          .expect(testValue)
+          .end(done)
+      });
+
       it('check for invalid operations', function (done) {
         server
           .get('/calculate/x/1/1')

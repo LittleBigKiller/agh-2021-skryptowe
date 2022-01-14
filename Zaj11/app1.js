@@ -102,13 +102,15 @@ app.get('/calculate/:operation/:x/:y', async function (req, res) {
         var newOp = new Op({ x: req.params.x, y: req.params.y, op: req.params.operation });
         await newOp.save()
 
-        res_str = req.params.x
+        res_str = '<h1>'
+        res_str += req.params.x
         res_str += ' '
         res_str += req.params.operation
         res_str += ' '
         res_str += req.params.y
         res_str += ' = '
         res_str += eval('' + req.params.x + req.params.operation + req.params.y)
+        res_str += '</h1>'
 
         res.send(res_str);
     }
