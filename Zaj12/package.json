@@ -1,0 +1,11 @@
+{
+  "name": "zaj12",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx mocha"
+  },
+  "author": "",
+  "license": "ISC"
+}
