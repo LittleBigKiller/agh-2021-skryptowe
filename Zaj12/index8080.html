@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Index8080</title>
+
+  <script>
+    function dlStuff() {
+      document.getElementById('remote').textContent = "Downloading data"
+      document.getElementById('local').textContent = "Downloading data"
+
+      fetch(`http://worldtimeapi.org/api/timezone/${encodeURI(document.getElementById('area').value)}/${encodeURI(document.getElementById('location').value)}`)
+        .then(response => {
+          if (!response.ok) { throw Error(response.statusText) }
+          if (response.headers.get('Content-Type') === 'text/html; charset=utf-8') {
+            document.getElementById('remote').textContent = "The server is overloaded"
+            throw Error(response.statusText)
+          }
+          return response.json()
+        })
+        .then(data => {
+          let dt = new Date(Date.parse(data.datetime))
+          document.getElementById('remote').textContent = `${dt.toLocaleDateString()} ${dt.toLocaleTimeString()}`
+        })
+
+      fetch(`http://localhost:8081/`)
+        .then(response => {
+          if (!response.ok) { throw Error(response.statusText) }
+          return response.text()
+        })
+        .then(data => {
+          document.getElementById('local').innerHTML = `${data}`
+        })
+    }
+  </script>
+</head>
+
+<body>
+  <form>
+    <input type="text" id="area" name="area">
+    <input type="text" id="location" name="location">
+    <input type="button" value="Pobierz" onclick="dlStuff()">
+  </form>
+
+  <h1>Remote</h1>
+  <div id='remote'>
+    Remote date and time
+  </div>
+  <!-- ***************** -->
+  <h1>Local</h1>
+  <div id='local'>
+    Local date and time
+  </div>
+
+</body>
+
+</html>
