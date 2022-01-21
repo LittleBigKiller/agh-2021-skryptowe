@@ -9,21 +9,45 @@
 
   <script>
     function dlStuff() {
-      document.getElementById('remote').textContent = "Downloading data"
-      document.getElementById('local').textContent = "Downloading data"
+      var remote = document.getElementById('remote')
+      var local = document.getElementById('local')
+
+      while (remote.firstChild) {
+        remote.removeChild(remote.lastChild)
+      }
+      while (local.firstChild) {
+        local.removeChild(local.lastChild)
+      }
+
+      var text = document.createTextNode("Downloading data")
+      remote.appendChild(text)
+
+      text = document.createTextNode("Downloading data")
+      local.appendChild(text)
 
       fetch(`http://worldtimeapi.org/api/timezone/${encodeURI(document.getElementById('area').value)}/${encodeURI(document.getElementById('location').value)}`)
         .then(response => {
           if (!response.ok) { throw Error(response.statusText) }
           if (response.headers.get('Content-Type') === 'text/html; charset=utf-8') {
-            document.getElementById('remote').textContent = "The server is overloaded"
+            while (remote.firstChild) {
+              remote.removeChild(remote.lastChild)
+            }
+
+            text = document.createTextNode("The server is overloaded")
+            remote.appendChild(text)
             throw Error(response.statusText)
           }
           return response.json()
         })
         .then(data => {
           let dt = new Date(Date.parse(data.datetime))
-          document.getElementById('remote').textContent = `${dt.toLocaleDateString()} ${dt.toLocaleTimeString()}`
+
+          while (remote.firstChild) {
+            remote.removeChild(remote.lastChild)
+          }
+
+          text = document.createTextNode(`${dt.toLocaleDateString()} ${dt.toLocaleTimeString()}`)
+          remote.appendChild(text)
         })
 
       fetch(`http://localhost:8081/`)
@@ -32,7 +56,14 @@
           return response.text()
         })
         .then(data => {
-          document.getElementById('local').innerHTML = `${data}`
+          while (local.firstChild) {
+            local.removeChild(local.lastChild)
+          }
+
+          dp = new DOMParser()
+
+          text = dp.parseFromString(`${data}`, 'text/xml')
+          local.appendChild(text.firstChild)
         })
     }
   </script>
